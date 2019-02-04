@@ -1,6 +1,6 @@
 # DevSecOps-Secure-Cloud-Enclaves
 ## Vision and Goals
-======================
+
 As the workplace evolves, so must security for such an environment. Today we live in the cloud-native and container security era, with IT professionals having to understand Docker, Kubernetes, serverless computing, and much more. This age of increasingly sophisticated systems has resulted in more complex cyber-attacks, and the legacy firewalls can’t keep up anymore. Resources that can be entirely firewalled off from the world are becoming rarer everyday.  Even on-prem infrastructures for internal applications has to connect to an outside resource at some point (backups, S3 storage, etc).
 
 It is also no longer so simple to just restrict all external traffic using a firewall; IT departments cannot simply have a whitelist, as everything is dynamic now. For example, consider the remote employee trying to connect from their home PC,tablet, or even an IoT device. All these have non-static IP addresses, so the whitelist would have to be updated constantly. With multiple endpoints now to consider, the surface area for malicious activity has increased immensely. 
@@ -12,7 +12,6 @@ Naturally, with such a wealth of information, any malicious actor would want to 
 Setting up such an environment, with all of these features to ensure security, would intuitively take many hours of labor on the departments responsible. With this in mind, DevSecOps will provide an automated approach to ensure a secure cloud enclave.  Specifically, we will use CONS3RT, a leading-edge cloud and security orchestration service, to implement governance and industry standards when it comes to security.  This will include such vital aspects such as logging and identity access management.
 
 ## Users/Personas Of The Project
-=============================
 The users of the project would be:
 * __Mission owner__- Admin to the project system from the customer’s side, who would control access and security of other customer users. The mission owner would control the customer user access levels.
 * __General users__- People with access to the data involved with the project.
@@ -22,7 +21,6 @@ The users of the project would be:
 * __Regulatory agencies__- Agencies that oversee, audit and accredit service providers.
 
 ## Scope
-==========
 “DevSecOps: Secure Cloud Enclaves” aims to provide a solution that automates building of secure enclaves within the Massachusetts Open Cloud. In terms of compliance, this shall include, but not be limited to the FedRAMP Moderate/DoD Impact Level 2 security specifications as the immediate goal, with a vision to extend this for Impact Level 4 in the future.
 
 #### FedRAMP Impact Levels
@@ -67,7 +65,7 @@ Encryption and Key Management is a stretch goal that includes:
 The end goal of this project is to combine the scripts and processes into a consolidated product, which can be released as a part of CONS3RT. This is envisioned to be built using workflows designed in Java.
 
 ## Solution Concept
-=================
+
 This section provides a high-level outline of the solution.
 
 __Global Architectural Structure of the Project__
@@ -85,7 +83,7 @@ __Design Implications and Discussion:__
 * __Key Management Service:__ OpenStack has some suggested software to deal with encryption and key management. Barbican, the OpenStack Key Manager service, will be used for volume encryption by generating and storing keys. An open-source Key Management Interoperability Protocol, PyKMIP library, to define message formats for the manipulation of keys.
 
 ## Acceptance Criteria
-================
+
 The minimum viable product for the project involves a system designed in a scripting language that includes automation of:
 1. Storage
 2. Logging
@@ -98,7 +96,7 @@ The stretch goals for the project include:
 Further, we intend to identify vulnerabilities in our system, if any, during validation by using the Tenable tool, which is a vulnerability scan tool used to accurately identify, investigate and prioritize vulnerabilities.
 
 ## Release Planning
-==============
+
 Note: As automation is paramount in the goal of the project, the project will follow an “automation as we go” model. 
 
 1. __Sprint 1: February 4 - 14__
