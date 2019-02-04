@@ -135,7 +135,8 @@ Note: As automation is paramount in the goal of the project, the project will fo
 (https://www.jetico.com/file-downloads/web_help/bcve3_enterprise/html/01_introduction/02_what_is_ve.htm)
 3. Tenable tool 
 https://www.tenable.com/products/tenable-io
-4. Firewall Isn’t Enough Sources
+4. Firewall Isn’t Enough Sources:
+
 https://www.twistlock.com/2018/05/23/firewalls-role-cloud-native-security/
 https://www.comtech-networking.com/blog/item/303-a-firewall-isn-t-enough-protecting-yourself-against-the-threats-you-can-t-see/
 https://www.owasp.org/index.php/Logging_Cheat_Sheet#Introduction
