@@ -84,7 +84,7 @@ __Design Implications and Discussion:__
 * __Accounts and Credentials:__ The rotation and changing of accounts and credentials, as well as controlling access to various functions in the cloud allocation will be done using both functionality from the CONS3RT service and the OpenStack Keystone Identity API.
 * __Key Management Service:__ OpenStack has some suggested software to deal with encryption and key management. Barbican, the OpenStack Key Manager service, will be used for volume encryption by generating and storing keys. An open-source Key Management Interoperability Protocol, PyKMIP library, to define message formats for the manipulation of keys.
 
-Acceptance criteria
+Acceptance Criteria
 ================
 The minimum viable product for the project involves a system designed in a scripting language that includes automation of:
 1. Storage
