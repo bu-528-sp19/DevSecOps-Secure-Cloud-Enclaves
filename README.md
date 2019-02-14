@@ -98,7 +98,8 @@ Further, we intend to identify vulnerabilities in our system, if any, during val
 ## Release Planning
 
 Note: As automation is paramount in the goal of the project, the project will follow an “automation as we go” model. 
-
+The Sprint taskboards can be found in the following link:
+https://tree.taiga.io/project/bowenislandsong-devsecops-secure-cloud-enclaves/taskboard/sprint-1-13885?kanban-status=1539726
 1. __Sprint 1: February 4 - 14__
   * Access the MOC through CONS3RT
   * Begin to verify Tenable as a validation tool
