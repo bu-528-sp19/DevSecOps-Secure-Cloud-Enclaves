@@ -100,32 +100,32 @@ Further, we intend to identify vulnerabilities in our system, if any, during val
 Note: As automation is paramount in the goal of the project, the project will follow an “automation as we go” model. 
 The Sprint taskboards can be found in the following link:
 https://tree.taiga.io/project/bowenislandsong-devsecops-secure-cloud-enclaves/taskboard/sprint-1-13885?kanban-status=1539726
-1. __Sprint 1: February 4 - 14__
+1. __Sprint 1: January 31 - Feburary 21__
   * Access the MOC through CONS3RT
   * Begin to verify Tenable as a validation tool
   * Begin to configure object storage
-2. __Sprint 2: February 15 - 28__
+2. __Sprint 2: February 21 - March 7__
  * Finish Object Storage
     * Creation of Buckets
     * Securing of Buckets
       * Disable Public Read/Write
       * Allow only SSL Requests
       * Object Versioning
-3. __Sprint 3: March 1 - 21__
+3. __Sprint 3: March 7 - March 21__
   * Start Logging
-    * Create dedicated bucket for logs
+    * Create dedicated bucket for 8ogs
     * Enable object level and server access logging
-4. __Sprint 4: March 22 - April 4__
+4. __Sprint 4: March 28 - April 11__
   * Finish Logging
     * Enable validation of log files
   * Accounts and Credentials
     * 60-Day password rotation
     * Enforcing password specifications
-5. __Sprint 5: April 5 - 18__
+5. __Sprint 5: April 11 - April 25__
   * Testing of services
     * Validation using tenable
  * Documentation of Project
-6. __Final Demo Sprint: April 19 - May 7__
+6. __Final Demo Sprint: April 25 - May 7__
   * Finished product
   * Stretch goals (time permitting)
 
