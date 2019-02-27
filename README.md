@@ -128,6 +128,17 @@ https://tree.taiga.io/project/bowenislandsong-devsecops-secure-cloud-enclaves/ta
 6. __Final Demo Sprint: April 25 - May 7__
   * Finished product
   * Stretch goals (time permitting)
+  
+  ## Our mentors
+* Peter Walsh ([peter.walsh@jackpinetech.com](peter.walsh@jackpinetech.com))
+* Joe Yennaco ([joe.yennaco@jackpinetech.com](joe.yennaco@jackpinetech.com))
+
+## Contributors
+* Avantika Dasgupta ([avandg@bu.edu](avandg@bu.edu))
+* Ethan Mcllhenny ([epm11@bu.edu](epm11@bu.edu))
+* Josh Manning ([joshe@bu.edu](joshe@bu.edu))
+* Dharmit Dalvi ([dharmit@bu.edu](dharmit@bu.edu))
+
 
 ## Sources and References
 ===================
