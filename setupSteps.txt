@@ -1,0 +1,41 @@
+sudo passwd root
+// Enter Password
+sudo passwd centos
+// Enter Password
+su root
+vi /etc/ssh/sshd_config
+// PasswordAuthentication yes
+// AllowAgentForwarding yes
+// X11UseLocalHost yes
+cd /home/centos
+mkdir imports
+chown centos /home/centos/imports
+reboot
+
+// On home device
+scp teammates.pub centos@128.31.27.20:~/imports
+// Enter password
+// reconnect to cloud
+
+su root
+cd /home/centos/imports
+cat testfile >> ~/.ssh/authorized_keys
+
+cd /
+yum install python
+yum -y update
+sudo yum install epel-release
+sudo yum install python-pip
+sudo yum install python-devel
+
+//CLI
+sudo yum install gcc
+pip install python-openstackclient
+pip install python-novalclient
+source --OPEN RC FILE--
+//Openstack
+sudo yum install -y centos-release-openstack-queens
+sudo yum-config-manager enable openstack-queens
+sudo yum update
+sudo yum install -y openstack-packstack
+sudo packstack --allinone // RUN
