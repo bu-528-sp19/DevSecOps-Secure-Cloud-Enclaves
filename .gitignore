@@ -4,3 +4,6 @@
 .aws
 .local
 .ssh/
+.ssh/
+.git/
+.local/
