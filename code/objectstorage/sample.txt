@@ -1,3 +1,0 @@
-This is a sample file to test:
-1. Uploading a file to an S3 bucket using boto
-2. Object versioning in buckets
