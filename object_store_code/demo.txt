@@ -1,0 +1,26 @@
+# List all buckets
+swift -A $OS_AUTH_URL -U $OS_TENANT_NAME:$OS_USERNAME -K $OS_PASSWORD list
+
+# View contents of a bucket
+swift -A $OS_AUTH_URL -U $OS_TENANT_NAME:$OS_USERNAME -K $OS_PASSWORD list bu528-secure-cloud-enclaves
+
+# Download contents of a bucket
+swift -A $OS_AUTH_URL -U $OS_TENANT_NAME:$OS_USERNAME -K $OS_PASSWORD download bu528-secure-cloud-enclaves
+
+# Create a new bucket
+swift -A $OS_AUTH_URL -U $OS_TENANT_NAME:$OS_USERNAME -K $OS_PASSWORD post devsecops-demobucket
+
+# Upload a file to a bucket
+swift -A $OS_AUTH_URL -U $OS_TENANT_NAME:$OS_USERNAME -K $OS_PASSWORD upload testbucket 'Object Storage.jpg'
+
+# List all buckets
+swift -A $OS_AUTH_URL -U $OS_TENANT_NAME:$OS_USERNAME -K $OS_PASSWORD list
+
+# View contents of a bucket
+swift -A $OS_AUTH_URL -U $OS_TENANT_NAME:$OS_USERNAME -K $OS_PASSWORD list devsecops-demobucket
+
+# Remove a bucket
+swift -A $OS_AUTH_URL -U $OS_TENANT_NAME:$OS_USERNAME -K $OS_PASSWORD delete devsecops-demobucket
+
+# List all buckets
+swift -A $OS_AUTH_URL -U $OS_TENANT_NAME:$OS_USERNAME -K $OS_PASSWORD list

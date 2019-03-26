@@ -1,0 +1,7 @@
+Versions: ----------
+<Key: versioning-enabled-bucket,sample.txt>
+<Key: versioning-enabled-bucket,sample.txt>
+<Key: versioning-enabled-bucket,sample2.txt>
+<Key: versioning-enabled-bucket,sample2.txt>
+<Key: versioning-enabled-bucket,sample2.txt>
+<Key: versioning-enabled-bucket,sample2.txt>
