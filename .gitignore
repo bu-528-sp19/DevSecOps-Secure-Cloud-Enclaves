@@ -7,3 +7,4 @@
 .ssh/
 .git/
 .local/
+.cache/
