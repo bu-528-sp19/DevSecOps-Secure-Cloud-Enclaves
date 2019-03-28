@@ -1,0 +1,29 @@
+############################# Filebeat ######################################
+filebeat:
+  # List of prospectors to fetch data.
+  prospectors:
+  #inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/*.log
+      - /var/log/secure
+      - /var/log/messages
+      - /var/log/neutron
+      - /var/log/nova
+      - /var/log/cinder
+      - /var/log/glance
+      - /var/log/horizon
+      - /var/log/keystone
+    registry_file: /var/lib/filebeat/registry
+output:
+  logstash:
+    enabled: true
+    hosts: ["localhost:5044"]
+shipping:
+logging:
+  to_files: true
+  json: true
+  files:
+    path: /var/log/filebeat
+    rotateeverybytes: 10485760
