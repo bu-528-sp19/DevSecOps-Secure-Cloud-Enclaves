@@ -124,6 +124,7 @@ https://tree.taiga.io/project/bowenislandsong-devsecops-secure-cloud-enclaves/ta
       * Object Level Logging
 4. __Sprint 4: March 28 - April 11__
   * Finish Logging
+    * Script Logging Configuration and Deployment on a VM
     * Enable validation of log files
   * Accounts and Credentials
     * 60-Day password rotation
@@ -135,6 +136,8 @@ https://tree.taiga.io/project/bowenislandsong-devsecops-secure-cloud-enclaves/ta
 6. __Final Demo Sprint: April 25 - May 7__
   * Finished product
   * Stretch goals (time permitting)
+    * Key Management and Encryption
+    * Java workflows
   
   ## Our mentors
 * Peter Walsh ([peter.walsh@jackpinetech.com](peter.walsh@jackpinetech.com))
