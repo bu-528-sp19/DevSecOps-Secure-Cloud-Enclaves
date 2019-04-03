@@ -25,7 +25,7 @@ function logErr() { echo -e "$(timestamp) ${logTag} [ERROR]: ${1}" >> ${logFile}
 
 # Openstack
 #sudo yum install -y centos-release-openstack-queens
-#sudo yum-config-manager anable openstack-queens
+#sudo yum-config-manager enable openstack-queens
 #sudo yum update
 #sudo yum install -y openstack-packstack
 #sudo packstack --allinone
