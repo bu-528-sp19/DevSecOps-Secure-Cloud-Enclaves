@@ -46,8 +46,8 @@ function logErr() { echo -e "$(timestamp) ${logTag} [ERROR]: ${1}" >> ${logFile}
 
 NOVARC=$(readlink -f "${BASH_SOURCE:-${0}}" 2>/dev/null) || NOVARC=$(python -c 'import os,sys; print os.path.abspath(os.path.realpath(sys.argv[1]))' "${BASH_SOURCE:-${0}}")
 NOVA_KEY_DIR=${NOVARC%/*}
-export EC2_ACCESS_KEY='08f1ed3eacab4d9dbea7ffe2bde56b7f'
-export EC2_SECRET_KEY=b62363429ac145b78912638ecbecddc9
+export EC2_ACCESS_KEY=//* ACCESS KEY *//
+export EC2_SECRET_KEY=//* SECRET KEY *//
 export EC2_URL=https://kaizen.massopen.cloud:13788
 export EC2_USER_ID=42 # nova does not use user id, but bundling requires it
 export EC2_PRIVATE_KEY=${NOVA_KEY_DIR}/pk.pem
