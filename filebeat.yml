@@ -7,14 +7,15 @@ filebeat:
     enabled: true
     paths:
       - /var/log/*.log
-      - /var/log/secure
-      - /var/log/messages
-      - /var/log/neutron
-      - /var/log/nova
-      - /var/log/cinder
-      - /var/log/glance
-      - /var/log/horizon
-      - /var/log/keystone
+      - /var/log/secure*
+      - /var/log/messages*
+      - /var/log/*/*.log
+      #- /var/log/neutron
+      #- /var/log/nova
+      #- /var/log/cinder
+      #- /var/log/glance
+      #- /var/log/horizon
+      #- /var/log/keystone
     registry_file: /var/lib/filebeat/registry
 output:
   logstash:
