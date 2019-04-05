@@ -1,0 +1,75 @@
+// Installing Fail2Ban
+
+// switch to root user
+su -
+
+// install EPEL (Extra Packages for Enterprise Linux) repository first.
+// EPEL contains additional packages for all CentOS versions,
+// one of these additional packages is Fail2Ban.
+yum install epel-release
+
+// install Fail2Ban
+yum install fail2ban fail2ban-systemd
+
+// Configure settings for Fail2Ban
+
+// Make a copy of the jail.conf file and save it with the name jail.local:
+cp -pf /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+
+// Open the jail.local file for editing in Nano with the following command.
+nano /etc/fail2ban/jail.local
+
+// A typical jail configuration file contains the following lines:
+
+[DEFAULT]
+
+#
+# MISCELLANEOUS OPTIONS
+#
+
+# "ignoreip" can be an IP address, a CIDR mask or a DNS host. Fail2ban will not
+# ban a host which matches an address in this list. Several addresses can be
+# defined using space separator.
+ignoreip = 127.0.0.1/8
+
+# External command that will take an tagged arguments to ignore, e.g. <ip>,
+# and return true if the IP is to be ignored. False otherwise.
+#
+# ignorecommand = /path/to/command <ip>
+ignorecommand =
+
+# "bantime" is the number of seconds that a host is banned.
+bantime = 600
+
+# A host is banned if it has generated "maxretry" during the last "findtime"
+# seconds.
+findtime = 600
+
+# "maxretry" is the number of failures before a host get banned.
+maxretry = 5
+
+
+// Add a jail file to protect SSH.
+
+// Create a new file with the Nano editor
+nano /etc/fail2ban/jail.d/sshd.local
+
+// To the above file, add the following lines of code.
+
+[sshd]
+enabled = true
+port = ssh
+#action = firewallcmd-ipset
+logpath = %(sshd_log)s
+maxretry = 5
+bantime = 86400
+
+// Running Fail2Ban service
+
+// When you are not running the CentOS Firewall yet, then start it:
+systemctl enable firewalld
+systemctl start firewalld
+
+// Execute the following lines of command to run the protective Fail2Ban software on the server.
+systemctl enable fail2ban
+systemctl start fail2ban
