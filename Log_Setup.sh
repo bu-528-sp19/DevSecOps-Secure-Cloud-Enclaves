@@ -1,6 +1,6 @@
 #!/bin/bash
-# Considering login as root -- ?
-# Source the environment
+#Considering login as root -- ?
+#Source the environment
 if [ -f /etc/bashrc ] ; then
     . /etc/bashrc
 fi
@@ -12,16 +12,12 @@ logTag="logging_config"
 logDir="/var/log/cons3rt"
 logFile="${logDir}/${logTag}-$(date "+%Y%m%d-%H%M%S").log"
 ######################### GLOBAL VARIABLES #########################
-
 ######################## HELPER FUNCTIONS ############################
-
 # Logging functions
 function timestamp() { date "+%F %T"; }
 function logInfo() { echo -e "$(timestamp) ${logTag} [INFO]: ${1}" >> ${logFile}; }
 function logWarn() { echo -e "$(timestamp) ${logTag} [WARN]: ${1}" >> ${logFile}; }
 function logErr() { echo -e "$(timestamp) ${logTag} [ERROR]: ${1}" >> ${logFile}; }
-
-
 ###################### INSTALLING DEPENDENCIES ######################
 function install_dependencies() {
 	logInfo "Updating yum packages..."
@@ -50,7 +46,6 @@ function install_dependencies() {
 	logInfo "Success"
 	logInfo "Creating Elastic Repo"
 	sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
-
 	cd /etc/yum.repos.d/
 	{
 		echo -e	"[elastic-6.x]"
@@ -62,11 +57,10 @@ function install_dependencies() {
 		echo -e "autorefresh=1"
 		echo -e "type=rpm-md"
 	} > elastic.repo
-
 	logInfo "Success"
 	logInfo "Installing filebeat..."
 	sudo yum -y install filebeat
-	logIngo "Success"
+	logInfo "Success"
 	#sudo chkconfig --add filebeat #start on boot
 	logInfo "Installing logstash..."
 	sudo yum -y install logstash
@@ -88,9 +82,9 @@ function filebeat_config() {
 		echo -e "      - /var/log/*/*.log"
 		echo -e "    registry_file: /var/lib/filebeat/registry"
 		echo -e "output:"
-		echo -e "logstash:"
-		echo -e "  enabled: true"
-		echo -e "  hosts: [\"localhost:5044\"]"
+		echo -e "  logstash:"
+		echo -e "    enabled: true"
+		echo -e "    hosts: [\"localhost:5044\"]"
 		echo -e "shipping:"
 		echo -e "logging:"
 		echo -e "  to_files: true"
@@ -119,27 +113,25 @@ function logstash_config() {
 		echo -e "		path => \"/test_log/DEMO_1.txt\""
 		echo -e "	}"
 		echo -e "}"
-	} > logstash.conf
-	
+	} > logstash.conf	
 }
 ############################## LAUNCH SERVICES ##############################################
 function start_filebeat() {
 	cd /usr/share/filebeat
-	bin/filebeat --path.config /etc/filebeat
+	bin/filebeat --path.config /etc/filebeat &
 }
 function start_logstash() {
 	cd /usr/share/logstash
-	bin/logstash --path.settings /etc/logstash
+	bin/logstash --path.settings /etc/logstash &
 }
 ############################## MAIN #########################################################
 function main(){
-	install_dependecies
+	install_dependencies
 	filebeat_config
 	logstash_config
 	start_filebeat
 	start_logstash
 }
-
 ################################ COMMANDS ###################################################
 mkdir -p ${logDir}
 chmod 700 ${logDir}
