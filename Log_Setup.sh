@@ -106,7 +106,7 @@ function logstash_config() {
 	{ 
 		echo -e "input {"
 		echo -e "	beats {"
-		echo -e "		port==>5044"
+		echo -e "		port=>5044"
 		echo -e "	}"
 		echo -e "}"
 		echo -e "filter {"
