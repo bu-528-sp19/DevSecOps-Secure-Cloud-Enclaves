@@ -1,7 +1,5 @@
 #!/bin/bash
-
 # Considering login as root -- ?
-
 # Source the environment
 if [ -f /etc/bashrc ] ; then
     . /etc/bashrc
@@ -27,28 +25,28 @@ function logErr() { echo -e "$(timestamp) ${logTag} [ERROR]: ${1}" >> ${logFile}
 ###################### INSTALLING DEPENDENCIES ######################
 function install_dependencies() {
 	logInfo "Updating yum packages..."
-	sudo yum -y updates
+	sudo yum -y update
 	logInfo "Success"
 	logInfo "Installing epel..."
-	sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+	sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 	logInfo "Success"
 	logInfo "Installing python..."
-	sudo yum install python
+	sudo yum -y install python
 	logInfo "Success"
 	logInfo "Installing java..."
-	sudo yum install java
+	sudo yum -y install java
 	logInfo "Success"
 	logInfo "Installing pip..."
-	sudo yum install python-pip
+	sudo yum -y install python-pip
 	logInfo "Success"
 	logInfo "Installing wheel..."
-	sudo yum install python-wheel
+	sudo yum -y install python-wheel
 	logInfo "Success"
 	logInfo "Installing devel..."
-	sudo yum install python-devel
+	sudo yum -y install python-devel
 	logInfo "Success"
 	logInfo "Installing config"
-	sudo yum install gcc
+	sudo yum -y install gcc
 	logInfo "Success"
 	logInfo "Creating Elastic Repo"
 	sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
@@ -67,11 +65,11 @@ function install_dependencies() {
 
 	logInfo "Success"
 	logInfo "Installing filebeat..."
-	sudo yum install filebeat
+	sudo yum -y install filebeat
 	logIngo "Success"
 	#sudo chkconfig --add filebeat #start on boot
 	logInfo "Installing logstash..."
-	sudo yum install logstash
+	sudo yum -y install logstash
 	logInfo Success
 }
 ############################### MODIFY CONFIG FILES ##########################################
@@ -92,7 +90,7 @@ function filebeat_config() {
 		echo -e "output:"
 		echo -e "logstash:"
 		echo -e "  enabled: true"
-		echo -e "  hosts: [''localhost:5044'']"
+		echo -e "  hosts: [\"localhost:5044\"]"
 		echo -e "shipping:"
 		echo -e "logging:"
 		echo -e "  to_files: true"
@@ -113,12 +111,12 @@ function logstash_config() {
 		echo -e "}"
 		echo -e "filter {"
 		echo -e "	mutate {"
-		echo -e "		remove_field=>[''beat'', ''tags'', ''prospector'', ''input'', ''@version'', ''log'']"
+		echo -e "		remove_field=>[\"beat\", \"tags\", \"prospector\", \"input\", \"@version\", \"log\"]"
 		echo -e "	}"
 		echo -e "}"
 		echo -e "output {"
 		echo -e "	file {"
-		echo -e "		path => ''/test_log/DEMO_1.txt''"
+		echo -e "		path => \"/test_log/DEMO_1.txt\""
 		echo -e "	}"
 		echo -e "}"
 	} > logstash.conf
@@ -128,20 +126,18 @@ function logstash_config() {
 function start_filebeat() {
 	cd /usr/share/filebeat
 	bin/filebeat --path.config /etc/filebeat
-	
 }
 function start_logstash() {
 	cd /usr/share/logstash
 	bin/logstash --path.settings /etc/logstash
-	
 }
 ############################## MAIN #########################################################
 function main(){
-	install_dependecies()
-	filebeat_config()
-	logstash_config()
-	start_filebeat()
-	start_logstash()
+	install_dependecies
+	filebeat_config
+	logstash_config
+	start_filebeat
+	start_logstash
 }
 
 ################################ COMMANDS ###################################################
