@@ -104,7 +104,7 @@ function filebeat_config() {
 function logstash_config() {
 	cd /etc/logstash/conf.d
 	{ 
-		echo -e "inputs {"
+		echo -e "input {"
 		echo -e "	beats {"
 		echo -e "		port==>5044"
 		echo -e "	}"
