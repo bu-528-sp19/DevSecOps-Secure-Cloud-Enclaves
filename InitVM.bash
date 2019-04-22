@@ -64,8 +64,8 @@ alias ec2-upload-bundle="ec2-upload-bundle -a ${EC2_ACCESS_KEY} -s ${EC2_SECRET_
 {
   echo -e 'import boto3'
   echo -e 'import boto.s3.connection'
-  echo -e 'access_key = "08f1ed3eacab4d9dbea7ffe2bde56b7f"'
-  echo -e 'secret_key = "b62363429ac145b78912638ecbecddc9"'
+  echo -e 'access_key = //* ACCESS KEY *//'
+  echo -e 'secret_key = //* SECRET KEY *//'
   echo -e 'conn = boto.s3.connection.S3Connection(aws_access_key_id=access_key,aws_secret_access_key=secret_key,port=443,host="kzn-swift.massopen.cloud",is_secure=True,calling_format=boto.s3.connection.OrdinaryCallingFormat())'
   echo -e '#bucket = conn.create_bucket("versioning-enabled-bucket")'
   echo -e '#bucket.configure_versioning(True)'
