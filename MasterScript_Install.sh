@@ -73,6 +73,11 @@ function install_dependencies() {
 	logInfo "Installing Fail2Ban"
     sudo yum -y install fail2ban fail2ban-systemd
     logInfo "Success"
+    logInfo "Installing python-openstackclient..."
+    pip install python-openstackclient
+    pip install --uppgrade decorate
+    pip install --upgrade decorator
+    logIndo "Success"
 }
 ############################## MAIN #########################################################
 function main(){
