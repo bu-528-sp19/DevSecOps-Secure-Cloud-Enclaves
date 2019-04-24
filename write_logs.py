@@ -6,8 +6,8 @@ import datetime
 
 
 conn = boto.s3.connection.S3Connection(
-	aws_access_key_id=access_key,
-	aws_secret_access_key=secret_key,
+	aws_access_key_id=$OS_ACCESS_KEY,
+	aws_secret_access_key=$OS_SECRET_KEY,
 	port=443,
 	host='kzn-swift.massopen.cloud',
 	is_secure=True,
