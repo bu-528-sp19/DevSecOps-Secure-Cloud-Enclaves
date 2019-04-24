@@ -35,31 +35,27 @@ The features of this project can be can be summarized under five main headings:
 5. Java Workflow
 
 ### Storage and Logging:
-Object storage and its security and logging components will be designed as follows:
-* Storage will be implemented in the form of buckets that can house any number of objects
-* A dedicated bucket will be used to store logs
-* Only SSL requests will be allowed on the buckets
-* Public read/write will be disabled on the buckets
-* Versioning will be enabled on the buckets, which implies that:
+Object storage and its security and logging components are designed as follows:
+* Storage is implemented in the form of buckets that can house any number of objects
+* A dedicated bucket is used to store logs
+* Only SSL requests are allowed on the buckets
+* Public read/write is disabled on the buckets
+* Versioning is enabled on the buckets, which implies that:
   * Previous versions of objects can be restored
   * Deleted objects can be restored
-* Logging will be enabled on the buckets, which implies that:
-  * Object level logging will monitor and record the operations carried out on objects within a bucket
-  * Server access logging will monitor and record the requests that are made to a bucket
-* All traffic and management events in the cloudspace will be logged
-* Log file validation will be enabled
+* Logs are generated through the APIs we have created and scripted and are stored on the buckets
+* Log file validation is enabled
 
 ### Accounts & Credentials:
-The DoD (Department of Defense) requirements regarding accounts and credentials will be implemented. These requirements are as follows:
-* A 60-day maximum password lifetime will be imposed, on both user and application credentials
-* Passwords will adhere to a specification of “at a minimum, a case sensitive 8-character mix of upper case letters, lower case letters, numbers, and special characters, including at least one of each.” [1]
+The DoD (Department of Defense) requirements regarding accounts and credentials were to be implemented. These requirements are as follows:
+* A 60-day maximum password lifetime should be imposed, on both user and application credentials
+* Passwords should adhere to a specification of “at a minimum, a case sensitive 8-character mix of upper case letters, lower case letters, numbers, and special characters, including at least one of each.” [1]
+* However, as we do not have permissions to change/modify keystone credentials, and also, as the MOC is moving away from Keystone credentials and more towards institution single sign-on, we are not managing accounts and credentials as a part of this project.
 
 ### Keys & Encryption:
-Encryption and Key Management is a stretch goal that includes:
-* Enabling encryption on object storage buckets, which implies that:
-  * All objects will be encrypted when they are stored in the buckets
-* Encrypting volumes (combination of multiple partitions into a single logical unit of storage) [2]
-* Rotation of access keys (Still needs to verified whether applicable on MOC)
+Encryption and Key Management (which was originally a stretch goal, now a part of the MVP) includes:
+* Designing an API to encrypt the objects before uploading them to the bucket, and decrypting before serving to the user.
+* Generating keys and storing them.
 
 ### Java Workflow:
 The end goal of this project is to combine the scripts and processes into a consolidated product, which can be released as a part of CONS3RT. This is envisioned to be built using workflows designed in Java.
@@ -76,24 +72,22 @@ Currently CONS3RT’s functionality in an OpenStack environment is limited to se
 
 __Design Implications and Discussion:__
 
-* __Scripting:__ The scripting aspect of the project is flexible, in that the necessity of automation is paramount while the language it is written in is not. Most likely the scripting will be done in either Python, bash, or powershell. In the final stages of the product, if all key goals are met, the scripts will be converted into Java workflows so that they can be productionalized as a part of CONS3RT.
-* __Object Storage:__ To include an object storage feature, the OpenStack Swift Object Storage API will be used. This platform is already built to function in an OpenStack environment. The platform is also flexible in that it allows scripting in a variety of programming languages. In addition, it offers object encryption and versioning which are among our security standards. Another consideration was GlusterFS, but the OpenStack Object storage API seemed the better option for ease of use and capability. . Since the MOC is compatible with Ceph storage, the underlying object storage features will be Ceph. Our goal is to use the S3 API provided by Ceph to allow the creation of buckets.
-* __Logging:__ For logging we are working with Filebeat and Logstash, two components that belong to the ELK-stack pipeline. Filebeat plays the role of a logging agent — it collects log data from critical log files and forwards the data to Logstash. Logstash, further filters the logs received from Filebeat. We intend to use Logstash to filter the logs collected by Filebeat and forward them to one of our buckets.
-* __Accounts and Credentials:__ The rotation and changing of accounts and credentials, as well as controlling access to various functions in the cloud allocation will be done using both functionality from the CONS3RT service and the OpenStack Keystone Identity API. 
-* __Key Management Service:__ OpenStack has some suggested software to deal with encryption and key management. Barbican, the OpenStack Key Manager service, will be used for volume encryption by generating and storing keys. An open-source Key Management Interoperability Protocol, PyKMIP library, to define message formats for the manipulation of keys.
+* __Scripting:__ The scripting aspect of the project is flexible, in that the necessity of automation is paramount while the language it is written in is not. We have extensively used Shell scripting to convert all our programs into scripts that would enable automation. These scripts are put up on CONS3RT in the form of software assets. In the final stages of the product, if all key goals are met, the scripts will be converted into Java workflows so that they can be productionalized as a part of CONS3RT.
+* __Object Storage:__ Since the MOC is compatible with Ceph storage, the underlying object storage feature is Ceph. We have used the S3 API provided by Ceph for the creation of buckets.
+* __Logging:__ For logging we are working with Filebeat and Logstash, two components that belong to the ELK-stack pipeline. Filebeat plays the role of a logging agent — it collects log data from critical log files and forwards the data to Logstash. Logstash, further filters the logs received from Filebeat, and outputs the filtered logs to a file. We are using a cron job to send these filtered logs from the file to our bucket.  
+* __Key Management Service:__ We are using Barbican, the OpenStack Key Manager service, for generating and storing keys. We have one key for the log bucket and one for data bucket. Log bucket has a seperate key for security purposes.
 
 ## Acceptance Criteria
 
 The minimum viable product for the project involves a system designed in a scripting language that includes automation of:
 1. Storage
 2. Logging
-3. Managing accounts and credentials
+3. Managing keys and encryption
 
 The stretch goals for the project include:
-1. Managing keys and encryption
-2. Designing Java Workflows
+1. Designing Java Workflows
 
-Further, we intend to identify vulnerabilities in our system, if any, during validation by using the Tenable tool, which is a vulnerability scan tool used to accurately identify, investigate and prioritize vulnerabilities.
+In addition, we have installed and configured an Intrusion Detection/Prevention System called Fail2Ban, to detect excessive attempts to login in. Further, We intend to identify vulnerabilities in our system, if any, during validation by using the Tenable tool, which is a vulnerability scan tool used to accurately identify, investigate and prioritize vulnerabilities. In CONS3RT, the tenable tool is embedded in the Nessus scan software asset, which we will be adding to our test VM. 
 
 ## Release Planning
 
@@ -123,20 +117,22 @@ https://tree.taiga.io/project/bowenislandsong-devsecops-secure-cloud-enclaves/ta
       * Services on the VM
       * Object Level Logging
 4. __Sprint 4: March 28 - April 11__
-  * Finish Logging
+  * Enable validation of log files
+  * Scripting Configurations
     * Script Logging Configuration and Deployment on a VM
-    * Enable validation of log files
-  * Accounts and Credentials
-    * 60-Day password rotation
-    * Enforcing password specifications
+  * Key Management and Encryption
+    * Encrypting object at rest
+    * Managing keys using Barbican
+   
 5. __Sprint 5: April 11 - April 25__
-  * Testing of services
-    * Validation using tenable
+ * Finish Key Management and Encryption
+ * Finish Scripting and Deploying on the VM
  * Documentation of Project
 6. __Final Demo Sprint: April 25 - May 7__
+  * Testing of services
+    * Validation using tenable
   * Finished product
   * Stretch goals (time permitting)
-    * Key Management and Encryption
     * Java workflows
   
   ## Our mentors
