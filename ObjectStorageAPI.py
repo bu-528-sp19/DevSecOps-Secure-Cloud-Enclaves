@@ -5,6 +5,7 @@ import boto.s3
 import logging
 import datetime
 import argparse
+import os
 
 access_key = '08f1ed3eacab4d9dbea7ffe2bde56b7f' #Change to OS vars
 secret_key = 'b62363429ac145b78912638ecbecddc9' 
@@ -15,7 +16,7 @@ logging.basicConfig(filename='example.log',level=logging.DEBUG) #Change to /var/
 #print(args.echo)
 
 def list_buckets():
-    logging.info('list_buckets() '+ str(datetime.datetime.now()))
+    logging.info('list_buckets() '+ str(datetime.datetime.now()) + os.environ['OS_USERNAME'])
     try:
         for bucket in conn.get_all_buckets():
             print("{name}\t{created}".format(name = bucket.name,created = bucket.creation_date))
@@ -24,7 +25,7 @@ def list_buckets():
     
         
 def create_bucket(bucket_name):
-    logging.info('create_bucket() %s %s',bucket_name, str(datetime.datetime.now()))
+    logging.info('create_bucket() ' + bucket_name +' '+ str(datetime.datetime.now()) +' '+ os.environ['OS_USERNAME'])
     try:
         for bucket in conn.get_all_buckets():
             if bucket.name == bucket_name:
@@ -51,7 +52,7 @@ def delete_bucket(bucket_name):
         logging.error(err)
     
 def list_bucket_versions(bucket_name):
-    logging.info('list_bucket_versions() '+ bucket_name + ' ' + str(datetime.datetime.now()))
+    logging.info('list_bucket_versions() '+ bucket_name + ' ' + str(datetime.datetime.now())+' '+ os.environ['OS_USERNAME'])
     try:    
         bucket = conn.get_bucket(bucket_name)
         versions = bucket.list_versions()
@@ -62,7 +63,7 @@ def list_bucket_versions(bucket_name):
         logging.error('list_bucket_versions() - buckets versions could not be listed')
     
 def upload_to_bucket(key, path, bucket_name):
-    logging.info('upload_to_bucket() '+ bucket_name + ' ' + str(datetime.datetime.now()))
+    logging.info('upload_to_bucket() '+ bucket_name + ' ' + str(datetime.datetime.now()) + ' '+ os.environ['OS_USERNAME'])
     try:
         bucket = conn.get_bucket(bucket_name)
         k = bucket.new_key(key)
@@ -72,7 +73,7 @@ def upload_to_bucket(key, path, bucket_name):
 
     
 def download_from_bucket(key, path, bucket_name):
-    logging.info('download_from_bucket() '+ bucket_name + ' ' + str(datetime.datetime.now()))
+    logging.info('download_from_bucket() '+ bucket_name + ' ' + str(datetime.datetime.now()) + ' ' + os.environ['OS_USERNAME'])
     try:
         bucket = conn.get_bucket(bucket_name)
         k = bucket.get_key(key)
@@ -81,7 +82,7 @@ def download_from_bucket(key, path, bucket_name):
         logging.error('download_from_bucket() - file could not be downloaded from bucket')
     
 def delete_from_bucket(key, bucket_name):
-    logging.info('delete_from_bucket() '+ bucket_name + ' ' + str(datetime.datetime.now()))
+    logging.info('delete_from_bucket() '+ bucket_name + ' ' + str(datetime.datetime.now()) + ' ' + os.environ['OS_USERNAME'])
     try:
         bucket = conn.get_bucket(bucket_name)
         bucket.delete_key(key)
