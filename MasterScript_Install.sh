@@ -89,7 +89,7 @@ function get_scripts() {
 	cd /
 	mkdir code
 	chmod 755 code
-	curl -o /code/token_parser.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/masterr/token_parser.py
+	curl -o /code/token_parser.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/token_parser.py
 	curl -o /code/Create_Log_Bucket.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/Create_Log_Bucket.py
 	curl -o /code/write_logs.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/write_logs.py
 	curl -o /code/ObjectStorageAPI.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/ObjectStorageAPI.py
