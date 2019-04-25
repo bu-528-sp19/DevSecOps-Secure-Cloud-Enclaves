@@ -6,8 +6,6 @@ Created on Wed Mar 27 17:43:34 2019
 """
 
 import boto
-import boto.s3.connection
-import boto.s3
 import os
 import uuid
 
