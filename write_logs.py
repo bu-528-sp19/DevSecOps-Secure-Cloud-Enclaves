@@ -3,11 +3,16 @@ import boto.s3.connection
 import boto.s3
 import logging
 import datetime 
+import os
+import uuid
+
+access_key = os.environ.get('OS_ACCESS_KEY')
+secret_key = os.environ.get('OS_SECRET_KEY')
 
 
 conn = boto.s3.connection.S3Connection(
-	aws_access_key_id=$OS_ACCESS_KEY,
-	aws_secret_access_key=$OS_SECRET_KEY,
+	aws_access_key_id=access_key,
+	aws_secret_access_key=secret_key,
 	port=443,
 	host='kzn-swift.massopen.cloud',
 	is_secure=True,
