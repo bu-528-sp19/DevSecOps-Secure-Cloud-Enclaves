@@ -112,9 +112,7 @@ function gen_keys() {
 	mkdir inf
 	chmod 700 inf
 	# Set authentication URL to Keystone endpoint
-	export OS_AUTH_URL="https://kaizen.massopen.cloud:13000"
-	export OS_USERNAME='bu528-secure-cloud-enclaves'
-	export OS_PASSWORD='6BDD843C-5B49-46AD-93B3-C2AAEC930AF9'
+	declare -x OS_AUTH_URL="https://kaizen.massopen.cloud:13000"
 	# Create scoped token for keystone authentication (required for curl requests to Barbican)
 	openstack --os-identity-api-version 3 --os-username=$OS_USERNAME --os-user-domain-name=default --os-password=$OS_PASSWORD --os-project-name=$OS_USERNAME --os-project-domain-name=default token issue > /inf/auth_token.txt
 	# Extract token and put it in a script to set variable TOKEN --- this is also to be downloaded from git on VM init
@@ -125,7 +123,6 @@ function gen_keys() {
 	bash /inf/token.sh
 
 	logInfo "Generating keys for object storage buckets..."
-	export OS_AUTH_URL="https://kaizen.massopen.cloud:13000"
 
 	# Generate key for object storage buckets
 	curl -X POST -H "X-Auth-Token: $TOKEN" -H "content-type:application/json" -d '{
@@ -143,28 +140,7 @@ function gen_keys() {
 }
 function set_up_bucket() {
 	cd /code
-	export OS_ACCESS_KEY='08f1ed3eacab4d9dbea7ffe2bde56b7f'
-	export OS_SECRET_KEY='b62363429ac145b78912638ecbecddc9'
 	python Create_Log_Bucket.py
-}
-function add_environment_vars() {
-	{
-		echo -e "export OS_IDENTITY_API_VERSION='2.0'"
-		echo -e "export OS_USERNAME='bu528-secure-cloud-enclaves'"
-		echo -e "export OS_PROJECT='bu528-secure-cloud-enclaves'"
-		echo -e "export OS_PASSWORD='6BDD843C-5B49-46AD-93B3-C2AAEC930AF9'"
-		echo -e "export OS_AUTH_URL='https://kaizenold.massopen.cloud:5000'"
-	} > vars.txt 
-
-	cat vars.txt >> /root/.bash_profile
-	rm -f vars.txt
-
-	cd /etc/profile.d
-	{
-		echo -e "export OS_ACCESS_KEY='08f1ed3eacab4d9dbea7ffe2bde56b7f'";
-		echo -e "export OS_SECRET='b62363429ac145b78912638ecbecddc9'";
-	} > object_keys.sh
-	chmod 755 object_keys.sh
 }
 ############################## MAIN #########################################################
 function main(){
