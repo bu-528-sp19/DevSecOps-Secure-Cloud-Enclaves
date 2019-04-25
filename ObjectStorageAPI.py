@@ -99,19 +99,19 @@ conn = boto.s3.connection.S3Connection(
     calling_format=boto.s3.connection.OrdinaryCallingFormat())
 
 while True:
-    input1 = input("Do you want to continue? (Y/N)").upper()
+    input1 = str(input("Do you want to continue? (Y/N)")).upper()
     if input1 == 'N':
         conn.close()
         break
     else:
-        task = eval(input('''Enter: 
+        task = input('''Enter: 
                      1. List bucket
                      2. Create bucket
                      3. Delete bucket
                      4. List bucket versions
                      5. Upload to bucket
                      6. Download from bucket
-                     7. Delete from bucket '''))
+                     7. Delete from bucket ''')
         if task ==1:
             list_buckets()
         elif task ==2:
