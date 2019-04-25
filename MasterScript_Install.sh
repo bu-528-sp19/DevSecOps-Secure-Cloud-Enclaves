@@ -81,7 +81,7 @@ function install_dependencies() {
     logInfo "Success"
     logInfo "Installing python-openstackclient..."
     pip install python-openstackclient
-    pip install --uppgrade decorate
+    pip install --upgrade decorate
     pip install --upgrade decorator
     logIndo "Success"
 }
@@ -93,6 +93,7 @@ function get_scripts() {
 	curl -o /code/Create_Log_Bucket.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/Create_Log_Bucket.py
 	curl -o /code/write_logs.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/write_logs.py
 	curl -o /code/ObjectStorageAPI.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/ObjectStorageAPI.py
+	cd code
 	chmod 755 write_logs.py
 	chmod 755 ObjectStorageAPI.py
 	chmod 755 token_parser.py
@@ -155,7 +156,7 @@ function add_environment_vars() {
 
 	cat vars.txt >> /root/.bash_profile
 	rm -f vars.txt
-	
+
 	cd /etc/profile.d
 	{
 		echo -e "export OS_ACCESS_KEY='08f1ed3eacab4d9dbea7ffe2bde56b7f'";
