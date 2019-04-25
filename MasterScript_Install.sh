@@ -151,12 +151,15 @@ function add_environment_vars() {
 		echo -e "export OS_PROJECT='bu528-secure-cloud-enclaves'"
 		echo -e "export OS_PASSWORD='6BDD843C-5B49-46AD-93B3-C2AAEC930AF9'"
 		echo -e "export OS_AUTH_URL='https://kaizenold.massopen.cloud:5000'"
-	} cat > /root/.bash_profile
+	} > vars.txt 
 
+	cat vars.txt >> /root/.bash_profile
+	rm -f vars.txt
+	
 	cd /etc/profile.d
 	{
-		echo -e "export OS_ACCESS_KEY='08f1ed3eacab4d9dbea7ffe2bde56b7f'"
-		echo -e "export OS_SECRET='b62363429ac145b78912638ecbecddc9'"
+		echo -e "export OS_ACCESS_KEY='08f1ed3eacab4d9dbea7ffe2bde56b7f'";
+		echo -e "export OS_SECRET='b62363429ac145b78912638ecbecddc9'";
 	} > object_keys.sh
 	chmod 755 object_keys.sh
 }

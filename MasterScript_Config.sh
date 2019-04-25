@@ -50,7 +50,11 @@ function cron_config() {
     logInfo "Configuring log cron job..."
     { 
         echo -e '@hourly    0   cron.hourly     nice-runparts /etc/cron.hourly'
-    } cat > /etc/anacrontab
+    } > cron.txt
+
+    cat cron.txt >> /etc/anacrontab
+    rm -f cron.txt
+    
     cd /etc/cron.hourly
     {
         python /code/write_logs.py
