@@ -126,19 +126,19 @@ function gen_keys() {
 	chmod 700 /inf/token.sh
 	# Run the script that sets the token 
 	source /inf/token.sh
-	
+
 	echo $TOKEN 
 
 	logInfo "Generating keys for object storage buckets..."
-
+	cd /inf
 	# Generate key for object storage buckets
-	curl -X POST -H "X-Auth-Token: $TOKEN" -H "content-type:application/json" -d '{
+	curl -o store_key.json -X POST -H "X-Auth-Token: $TOKEN" -H "content-type:application/json" -d '{
 	"type":"key", "meta": { "name": "data_key", "algorithm": "aes",
 	"bit_length": 256, "mode": "cbc", "payload_content_type": "application/octet-stream"}
 	}' https://kaizen.massopen.cloud:13311/v1/orders
 
 	# Generate key for log storage bucket
-	curl -X POST -H "X-Auth-Token: $TOKEN" -H "content-type:application/json" -d '{
+	curl -o log_key.json -X POST -H "X-Auth-Token: $TOKEN" -H "content-type:application/json" -d '{
 	"type":"key", "meta": { "name": "log_key", "algorithm": "aes",
 	"bit_length": 256, "mode": "cbc", "payload_content_type": "application/octet-stream"}
 	}' https://kaizen.massopen.cloud:13311/v1/orders
