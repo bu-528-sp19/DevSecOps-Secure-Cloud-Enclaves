@@ -19,13 +19,13 @@ function logErr() { echo -e "$(timestamp) ${logTag} [ERROR]: ${1}" >> ${logFile}
 function filebeat_config() {
 	logInfo "Configuring filebeat..."
 	rm -f /etc/filebeat/filebeat.yml
-	curl -o /etc/filebeat/filebeat.yml https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/filebeat.yml
+	curl -o /etc/filebeat/filebeat.yml https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/filebeat.yml
 	logInfo "Success"
 }
 function logstash_config() {
 	logInfo "Configuring logstash..."
 	rm -f /etc/logstash/conf.d/logstash.conf
-	curl -o /etc/logstash/conf.d/logstash.conf https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/Configs/logstash.conf
+	curl -o /etc/logstash/conf.d/logstash.conf https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/Configs/logstash.conf
 	mkdir -p /store_log
 	chmod 700 /store_log
 	logInfo "Success"
@@ -64,7 +64,7 @@ function openstack_config() {
     cd /etc
     mkdir openstack
     cd openstack
-    curl -o clouds.yaml https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/clouds.yaml
+    curl -o clouds.yaml https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/clouds.yaml
     logInfo "Success"
 }
 ############################## MAIN #########################################################

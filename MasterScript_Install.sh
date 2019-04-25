@@ -89,10 +89,10 @@ function get_scripts() {
 	cd /
 	mkdir code
 	chmod 755 code
-	curl -o /code/token_parser.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/token_parser.py
-	curl -o /code/Create_Log_Bucket.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/Create_Log_Bucket.py
-	curl -o /code/write_logs.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/write_logs.py
-	curl -o /code/ObjectStorageAPI.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/ObjectStorageAPI.py
+	curl -o /code/token_parser.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/masterr/token_parser.py
+	curl -o /code/Create_Log_Bucket.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/Create_Log_Bucket.py
+	curl -o /code/write_logs.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/write_logs.py
+	curl -o /code/ObjectStorageAPI.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/ObjectStorageAPI.py
 	chmod 755 write_logs.py
 	chmod 755 ObjectStorageAPI.py
 	chmod 755 token_parser.py
@@ -111,7 +111,9 @@ function gen_keys() {
 	mkdir inf
 	chmod 700 inf
 	# Set authentication URL to Keystone endpoint
-	declare -x OS_AUTH_URL="https://kaizen.massopen.cloud:13000"
+	export OS_AUTH_URL="https://kaizen.massopen.cloud:13000"
+	export OS_USERNAME='bu528-secure-cloud-enclaves'
+	export OS_PASSWORD='6BDD843C-5B49-46AD-93B3-C2AAEC930AF9'
 	# Create scoped token for keystone authentication (required for curl requests to Barbican)
 	openstack --os-identity-api-version 3 --os-username=$OS_USERNAME --os-user-domain-name=default --os-password=$OS_PASSWORD --os-project-name=$OS_USERNAME --os-project-domain-name=default token issue > /inf/auth_token.txt
 	# Extract token and put it in a script to set variable TOKEN --- this is also to be downloaded from git on VM init
@@ -122,7 +124,7 @@ function gen_keys() {
 	bash /inf/token.sh
 
 	logInfo "Generating keys for object storage buckets..."
-	declare -x OS_AUTH_URL="https://kaizen.massopen.cloud:13000"
+	export OS_AUTH_URL="https://kaizen.massopen.cloud:13000"
 
 	# Generate key for object storage buckets
 	curl -X POST -H "X-Auth-Token: $TOKEN" -H "content-type:application/json" -d '{
