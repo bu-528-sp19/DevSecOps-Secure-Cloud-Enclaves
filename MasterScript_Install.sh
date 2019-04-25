@@ -159,7 +159,6 @@ function main(){
 	get_scripts
 	gen_keys
 	set_up_bucket
-	add_environment_vars
 }
 ################################ COMMANDS ###################################################
 main
