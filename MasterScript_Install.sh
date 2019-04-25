@@ -103,7 +103,7 @@ function get_scripts() {
 
 	cd /media
 	{
-		echo -e "\"echo Starting Obejct Storage API\""
+		echo -e "echo \"Starting Obejct Storage API\""
 		echo -e "python /code/ObjectStorageAPI.py"
 	} > StartAPI.sh
 
