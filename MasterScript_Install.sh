@@ -115,7 +115,7 @@ function gen_keys() {
 	mkdir inf
 	chmod 700 inf
 	# Set authentication URL to Keystone endpoint
-	declare -x OS_AUTH_URL="https://kaizen.massopen.cloud:13000"
+	declare -x OS_AUTH_URL=https://kaizen.massopen.cloud:13000
 	# Create scoped token for keystone authentication (required for curl requests to Barbican)
 	openstack --os-identity-api-version 3 --os-username=$OS_USERNAME --os-user-domain-name=default --os-password=$OS_PASSWORD --os-project-name=$OS_USERNAME --os-project-domain-name=default token issue > /inf/auth_token.txt
 	# Extract token and put it in a script to set variable TOKEN --- this is also to be downloaded from git on VM init
