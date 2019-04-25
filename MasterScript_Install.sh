@@ -41,7 +41,13 @@ function install_dependencies() {
 	logInfo "Installing devel..."
 	sudo yum -y install python-devel
 	logInfo "Success"
-	logInfo "Installing config"
+	logInfo "Installing setuptools..."
+	sudo yum -y install python-setuptools
+	logInfo "Success"
+	logInfo "Installing crypto..."
+	sudo yum -y install python-crypto
+	logInfo "Success"
+	logInfo "Installing gcc"
 	sudo yum -y install gcc
 	logInfo "Success"
 	logInfo "Creating Elastic Repo"
@@ -82,16 +88,20 @@ function install_dependencies() {
 function get_scripts() {
 	cd /
 	mkdir code
-	chmod 700 code
-	curl -o token_parser.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/token_parser.py
-	curl -o Create_Log_Bucket.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/Create_Log_Bucket.py
-
+	chmod 755 code
+	curl -o /code/token_parser.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/token_parser.py
+	curl -o /code/Create_Log_Bucket.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/Create_Log_Bucket.py
+	curl -o /code/write_logs.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/write_logs.py
+	curl -o /code/ObjectStorageAPI.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/ObjectStorageAPI.py
+	chmod 755 write_logs.py
+	chmod 755 ObjectStorageAPI.py
+	chmod 755 token_parser.py
+	chmod 755 Create_Log_Bucket.py
 
 	cd /media
-	curl -o ObjectStorageAPI.py https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/ObjectStorageAPI.py
 	{
 		echo -e "\"echo Starting Obejct Storage API\""
-		echo -e "python /media/ObjectStorageAPI.py"
+		echo -e "python /code/ObjectStorageAPI.py"
 	} > StartAPI.sh
 
 }
@@ -132,6 +142,22 @@ function set_up_bucket() {
 	cd /code
 	python Create_Log_Bucket.py
 }
+function add_environment_vars() {
+	{
+		echo -e "export OS_IDENTITY_API_VERSION='2.0'"
+		echo -e "export OS_USERNAME='bu528-secure-cloud-enclaves'"
+		echo -e "export OS_PROJECT='bu528-secure-cloud-enclaves'"
+		echo -e "export OS_PASSWORD='6BDD843C-5B49-46AD-93B3-C2AAEC930AF9'"
+		echo -e "export OS_AUTH_URL='https://kaizenold.massopen.cloud:5000'"
+	} cat > /root/.bash_profile
+
+	cd /etc/profile.d
+	{
+		echo -e "export OS_ACCESS_KEY='08f1ed3eacab4d9dbea7ffe2bde56b7f'"
+		echo -e "export OS_SECRET='b62363429ac145b78912638ecbecddc9'"
+	} > object_keys.sh
+	chmod 755 object_keys.sh
+}
 ############################## MAIN #########################################################
 function main(){
 	install_dependencies
@@ -140,7 +166,6 @@ function main(){
 	set_up_bucket
 }
 ################################ COMMANDS ###################################################
-chmod 700 /var/log
 mkdir -p ${logDir}
 chmod 700 ${logDir}
 touch ${logFile}
