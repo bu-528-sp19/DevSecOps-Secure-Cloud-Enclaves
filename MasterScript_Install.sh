@@ -126,6 +126,8 @@ function gen_keys() {
 	chmod 700 /inf/token.sh
 	# Run the script that sets the token 
 	source /inf/token.sh
+	
+	echo $TOKEN 
 
 	logInfo "Generating keys for object storage buckets..."
 
