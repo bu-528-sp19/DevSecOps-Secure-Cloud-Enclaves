@@ -8,9 +8,12 @@ Created on Wed Mar 27 17:43:34 2019
 import boto
 import boto.s3.connection
 import boto.s3
+import os
+import uuid
 
-access_key = $OS_ACCESS_KEY
-secret_key = $OS_SECRET_KEY
+access_key = os.environ.get('OS_ACCESS_KEY')
+secret_key = os.environ.get('OS_SECRET_KEY')
+
 
 
 conn = boto.s3.connection.S3Connection(
