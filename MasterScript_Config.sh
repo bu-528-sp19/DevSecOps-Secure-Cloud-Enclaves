@@ -59,12 +59,21 @@ function cron_config() {
     logInfo "Success"
 
 }
+function openstack_config() {
+    logInfo "Configuring openstack..."
+    cd /etc
+    mkdir openstack
+    cd openstack
+    curl -o clouds.yaml https://github.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/blob/master/clouds.yaml
+    logInfo "Success"
+}
 ############################## MAIN #########################################################
 function main(){
     filebeat_config
     logstash_config
     fail2ban_config
     cron_config
+    openstack_config
 }
 main
 cat ${logFile}
