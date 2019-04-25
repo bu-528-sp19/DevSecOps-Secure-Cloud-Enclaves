@@ -85,6 +85,9 @@ function install_dependencies() {
     pip install --upgrade decorate
     pip install --upgrade decorator
     logInfo "Success"
+    logInfo "Installing python-barbicanclient"
+    pip install python-barbicanclient
+    logInfo "Success"
 }
 function get_scripts() {
 	echo "Getting scripts..."
