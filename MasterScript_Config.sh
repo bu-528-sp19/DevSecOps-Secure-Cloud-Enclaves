@@ -46,11 +46,25 @@ function fail2ban_config() {
     cd /
     logInfo "Success"
 }
+function cron_config() {
+    logInfo "Configuring log cron job..."
+    { 
+        echo -e '@hourly    0   cron.hourly     nice-runparts /etc/cron.hourly'
+    } cat > /etc/anacrontab
+    cd /etc/cron.hourly
+    {
+        python /code/write_logs.py
+    } > log.cron
+    chmod 755 log.cron
+    logInfo "Success"
+
+}
 ############################## MAIN #########################################################
 function main(){
     filebeat_config
     logstash_config
     fail2ban_config
+    cron_config
 }
 main
 cat ${logFile}

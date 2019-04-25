@@ -11,7 +11,6 @@ fi
 logTag="logging_config"
 logDir="/var/log/cons3rt"
 logFile="${logDir}/${logTag}-$(date "+%Y%m%d-%H%M%S").log"
-######################### GLOBAL VARIABLES #########################
 ######################## HELPER FUNCTIONS ############################
 # Logging functions
 function timestamp() { date "+%F %T"; }
