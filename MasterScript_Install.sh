@@ -151,9 +151,5 @@ function main(){
 	add_environment_vars
 }
 ################################ COMMANDS ###################################################
-mkdir -p ${logDir}
-chmod 700 ${logDir}
-touch ${logFile}
-chmod 644 ${logFile}
 main
 cat ${logFile}

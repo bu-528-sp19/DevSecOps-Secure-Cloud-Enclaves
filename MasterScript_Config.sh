@@ -54,7 +54,7 @@ function cron_config() {
 
     cat cron.txt >> /etc/anacrontab
     rm -f cron.txt
-    
+
     cd /etc/cron.hourly
     {
         python /code/write_logs.py
@@ -68,7 +68,7 @@ function openstack_config() {
     cd /etc
     mkdir openstack
     cd openstack
-    curl -o clouds.yaml https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/clouds.yaml
+    mv /media/clouds.yaml clouds.yaml
     logInfo "Success"
 }
 ############################## MAIN #########################################################
