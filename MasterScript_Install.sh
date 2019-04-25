@@ -83,7 +83,7 @@ function install_dependencies() {
     pip install python-openstackclient
     pip install --upgrade decorate
     pip install --upgrade decorator
-    logIndo "Success"
+    logInfo "Success"
 }
 function get_scripts() {
 	cd /
@@ -143,6 +143,8 @@ function gen_keys() {
 }
 function set_up_bucket() {
 	cd /code
+	export OS_ACCESS_KEY='08f1ed3eacab4d9dbea7ffe2bde56b7f'
+	export OS_SECRET_KEY='b62363429ac145b78912638ecbecddc9'
 	python Create_Log_Bucket.py
 }
 function add_environment_vars() {
@@ -170,6 +172,7 @@ function main(){
 	get_scripts
 	gen_keys
 	set_up_bucket
+	add_environment_vars
 }
 ################################ COMMANDS ###################################################
 mkdir -p ${logDir}
