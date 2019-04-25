@@ -6,9 +6,10 @@ import logging
 import datetime
 import argparse
 import os
+import uuid
 
-access_key = '08f1ed3eacab4d9dbea7ffe2bde56b7f' #Change to OS vars
-secret_key = 'b62363429ac145b78912638ecbecddc9' 
+access_key = os.environ.get('OS_ACCESS_KEY')
+secret_key = os.environ.get('OS_SECRET_KEY')
 logging.basicConfig(filename='example.log',level=logging.DEBUG) #Change to /var/logs/...
 #parser = argparse.ArgumentParser()
 #parser.add_argument("echo")
