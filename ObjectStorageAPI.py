@@ -124,17 +124,17 @@ while True:
             input2 = raw_input("Enter name of the bucket for which version is to be obtained: ")
             list_bucket_versions(input2)
         elif task == 5:
-            key = eval(raw_input("Enter the key: "))
+            key = raw_input("Enter the key: ")
             path = raw_input("Enter the path :")
             name = raw_input("Enter the bucket name :")
             upload_to_bucket(key,path,name)
         elif task == 6:
-            key = eval(raw_input("Enter the key :"))
+            key = raw_input("Enter the key :")
             path = raw_input("Enter the path :")
             name = raw_input("Enter the bucket name :")
             download_from_bucket(key,path,name)
         elif task == 7:
-            key = eval(raw_input("Enter the key :"))
+            key = raw_input("Enter the key :")
             name = raw_input("Enter the bucket name :")
             delete_from_bucket(key,name)
 #list_buckets()
