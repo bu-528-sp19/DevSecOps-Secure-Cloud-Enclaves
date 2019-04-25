@@ -107,6 +107,8 @@ function get_scripts() {
 		echo -e "python /code/ObjectStorageAPI.py"
 	} > StartAPI.sh
 
+	mkdir /var/log/object_store
+	mkfile /var/log/object_store/object_store.log
 }
 function gen_keys() {
 	echo 'Generating keys...'
