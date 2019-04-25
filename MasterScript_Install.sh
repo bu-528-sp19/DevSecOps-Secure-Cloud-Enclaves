@@ -20,6 +20,7 @@ function logWarn() { echo -e "$(timestamp) ${logTag} [WARN]: ${1}" >> ${logFile}
 function logErr() { echo -e "$(timestamp) ${logTag} [ERROR]: ${1}" >> ${logFile}; }
 ###################### INSTALLING DEPENDENCIES ######################
 function install_dependencies() {
+	echo "Installing dependencies..."
 	logInfo "Updating yum packages..."
 	sudo yum -y update
 	logInfo "Success"
@@ -86,6 +87,7 @@ function install_dependencies() {
     logInfo "Success"
 }
 function get_scripts() {
+	echo "Getting scripts..."
 	cd /
 	mkdir code
 	chmod 755 code
@@ -107,6 +109,7 @@ function get_scripts() {
 
 }
 function gen_keys() {
+	echo 'Generating keys...'
 	# Creating folder to store credentials with only root access
 	cd /
 	mkdir inf
@@ -139,6 +142,7 @@ function gen_keys() {
 	logInfo "Success"
 }
 function set_up_bucket() {
+	echo 'Creating Log Bucket...'
 	cd /code
 	python Create_Log_Bucket.py
 }
