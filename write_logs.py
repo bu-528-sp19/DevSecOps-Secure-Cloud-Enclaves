@@ -22,6 +22,6 @@ logging.info('log upload to '+ 'log_bucket' + ' ' + str(datetime.datetime.now())
 try:
     bucket = conn.get_bucket('log_bucket')
     k = bucket.new_key('log_'+str(datetime.datetime.now().date()))
-    k.set_contents_from_filename('/store_log/log_' + str(datetime.datetime.now().date()))
+    k.set_contents_from_filename('/store_log/log_' + str(datetime.datetime.now().date())+'.txt')
 except:
     logging.error('upload_to_bucket() - file could not be uploaded to bucket')
