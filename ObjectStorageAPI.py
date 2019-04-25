@@ -10,7 +10,7 @@ import uuid
 
 access_key = os.environ.get('OS_ACCESS_KEY')
 secret_key = os.environ.get('OS_SECRET_KEY')
-logging.basicConfig(filename='example.log',level=logging.DEBUG) #Change to /var/logs/...
+logging.basicConfig(filename='/var/log/object_store/object_store.log',level=logging.DEBUG)
 #parser = argparse.ArgumentParser()
 #parser.add_argument("echo")
 #args = parser.parse_args()
