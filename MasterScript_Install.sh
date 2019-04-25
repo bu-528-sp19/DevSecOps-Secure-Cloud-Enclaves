@@ -111,7 +111,7 @@ function get_scripts() {
 	} > StartAPI.sh
 
 	mkdir /var/log/object_store
-	mkfile /var/log/object_store/object_store.log
+	touch /var/log/object_store/object_store.log
 }
 function gen_keys() {
 	echo 'Generating keys...'
