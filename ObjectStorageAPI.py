@@ -99,43 +99,43 @@ conn = boto.s3.connection.S3Connection(
     calling_format=boto.s3.connection.OrdinaryCallingFormat())
 
 while True:
-    input1 = str(input("Do you want to continue? (Y/N)")).upper()
+    input1 = raw_input("Do you want to continue? (Y/N)").upper()
     if input1 == 'N':
         conn.close()
         break
     else:
-        task = input('''Enter: 
+        task = eval(raw_input('''Enter: 
                      1. List bucket
                      2. Create bucket
                      3. Delete bucket
                      4. List bucket versions
                      5. Upload to bucket
                      6. Download from bucket
-                     7. Delete from bucket ''')
+                     7. Delete from bucket '''))
         if task ==1:
             list_buckets()
         elif task ==2:
-            input2 = input("Enter name of the bucket to be created: ")
+            input2 = raw_input("Enter name of the bucket to be created: ")
             create_bucket(input2)
         elif task == 3:
-            input2 = input("Enter name of the bucket to be deleted: ")
+            input2 = raw_input("Enter name of the bucket to be deleted: ")
             delete_bucket(input2)
         elif task == 4:
-            input2 = input("Enter name of the bucket for which version is to be obtained: ")
+            input2 = raw_input("Enter name of the bucket for which version is to be obtained: ")
             list_bucket_versions(input2)
         elif task == 5:
-            key = eval(input("Enter the key: "))
-            path = input("Enter the path :")
-            name = input("Enter the bucket name :")
+            key = eval(raw_input("Enter the key: "))
+            path = raw_input("Enter the path :")
+            name = raw_input("Enter the bucket name :")
             upload_to_bucket(key,path,name)
         elif task == 6:
-            key = eval(input("Enter the key :"))
-            path = input("Enter the path :")
-            name = input("Enter the bucket name :")
+            key = eval(raw_input("Enter the key :"))
+            path = raw_input("Enter the path :")
+            name = raw_input("Enter the bucket name :")
             download_from_bucket(key,path,name)
         elif task == 7:
-            key = eval(input("Enter the key :"))
-            name = input("Enter the bucket name :")
+            key = eval(raw_input("Enter the key :"))
+            name = raw_input("Enter the bucket name :")
             delete_from_bucket(key,name)
 #list_buckets()
 #create_bucket('api-testing-bucket')
