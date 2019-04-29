@@ -65,7 +65,6 @@ def upload_to_bucket(key, path, bucket_name):
     try:
         buffSz=1024*64
         with open(path,'rb') as fIn:
-            print("encrypting")
             with open('encTmp.aes','wb') as fOut:
                 pyAesCrypt.encryptStream(fIn,fOut,password,buffSz)
         bucket = conn.get_bucket(bucket_name)
