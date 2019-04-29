@@ -49,18 +49,11 @@ function fail2ban_config() {
 function cron_config() {
     logInfo "Configuring log cron job..."
     { 
-        echo -e '@hourly    0    cron.hourly             nice run-parts /etc/cron.hourly'
+        echo -e '@hourly    0    cron.hourly             python /code/write_logs.py'
     } > cron.txt
 
     cat cron.txt >> /etc/anacrontab
     rm -f cron.txt
-
-    cd /etc/cron.hourly
-    {
-        echo -e "python /code/write_logs.py"
-    } > log.cron
-    chmod 755 log.cron
-    logInfo "Success"
 
 }
 function openstack_config() {
