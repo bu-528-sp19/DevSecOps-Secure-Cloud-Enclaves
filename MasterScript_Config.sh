@@ -49,7 +49,7 @@ function fail2ban_config() {
 function cron_config() {
     logInfo "Configuring log cron job..."
     { 
-        echo -e '@hourly    0   cron.hourly     nice-runparts /etc/cron.hourly'
+        echo -e '@hourly    0    cron.hourly             nice run-parts /etc/cron.hourly'
     } > cron.txt
 
     cat cron.txt >> /etc/anacrontab
