@@ -29,8 +29,8 @@ function install_dependencies() {
 	logInfo "Success"
 	logInfo "Installing python..."
 	sudo yum -y install python
-	sudo yum install centos-release-scl
-	sudo yum install rh-python36
+	sudo yum -y install centos-release-scl
+	sudo yum -y install rh-python36
 	scl enable rh-python36 bash
 	#wget https://bootstrap.pypa.io/get-pip.py
 	#python3.6 get-pip.py
