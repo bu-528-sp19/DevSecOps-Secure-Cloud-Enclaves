@@ -32,11 +32,8 @@ function install_dependencies() {
 	sudo yum install centos-release-scl
 	sudo yum install rh-python36
 	scl enable rh-python36 bash
-	#wget https://bootstrap.pypa.io/get-pip.py
-	#python3.6 get-pip.py
 	sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
         sudo yum -y install python36u python36u-devel python36u-pip
-	sudo pip3.6 install PyAesCrypt
 	logInfo "Success"
 	logInfo "Installing java..."
 	sudo yum -y install java
@@ -55,6 +52,7 @@ function install_dependencies() {
 	logInfo "Success"
 	logInfo "Installing crypto..."
 	sudo yum -y install python-crypto
+        sudo pip3.6 install PyAesCrypt
 	logInfo "Success"
 	logInfo "Installing gcc"
 	sudo yum -y install gcc
