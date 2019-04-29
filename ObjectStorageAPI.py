@@ -63,30 +63,11 @@ def list_bucket_versions(bucket_name):
 def upload_to_bucket(key, path, bucket_name):
     logging.info('upload_to_bucket() '+ bucket_name + ' ' + str(datetime.datetime.now()) + ' '+ os.environ['OS_USERNAME'])
     try:
-        #import random
-        print("working")
-        #encryptor = AES.new(password,AES.MODE_CBC,)
-        #iv=''.join(chr(random.randint(0,0xFF)) for i in range(16))
-        print(password)
-        #while(len(password)<16):
-        #	password=password+'0'
-        #encryptor = AES.new(password,AES.MODE_CBC, iv)
-        print("alfter enc declaration")
-        print(path)
         buffSz=1024*64
         with open(path,'rb') as fIn:
             print("encrypting")
             with open('encTmp.aes','wb') as fOut:
-                print("writing encryption")
-                #while True:
-                #   chunk=fIn.read(buffSz)
-                #if(len(chunk)):
-                #    break
-                #elif (len(chunk)%16!=0):
-                #    chunk+=' ' * (16 - len(chunk)%16)
-                #fOut.write(encryptor.encrypt(chunk))
                 pyAesCrypt.encryptStream(fIn,fOut,password,buffSz)
-                print("done Encrypting")
         bucket = conn.get_bucket(bucket_name)
         k = bucket.new_key(key)
         k.set_contents_from_filename('encTmp.aes')
@@ -99,19 +80,11 @@ def download_from_bucket(key, path, bucket_name):
     try:
         bucket = conn.get_bucket(bucket_name)
         k = bucket.get_key(key)
+	encFileSz=stat('encTmp.aes').st_size
         k.get_contents_to_filename(path)
         with open(path, 'rb') as infile:
-            origsize = struct.unpack('<Q', infile.read(struct.calcsize('Q')))[0]
-            decryptor = AES.new(password, AES.MODE_CBC, b'0000000000000000')
-
             with open(path, 'wb') as outfile:
-                while True:
-                    chunk = infile.read(buffSz)
-                    if len(chunk) == 0:
-                        break
-                    outfile.write(decryptor.decrypt(chunk))
-    
-                outfile.truncate(origsize)
+                pyAesCrypt.decryptStream(infile,outfile,password,buffSz,encFileSz)    
 
     except:
         logging.error('download_from_bucket() - file could not be downloaded from bucket')
