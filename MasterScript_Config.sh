@@ -57,7 +57,7 @@ function cron_config() {
 
     cd /etc/cron.hourly
     {
-        python /code/write_logs.py
+        echo -e "python /code/write_logs.py"
     } > log.cron
     chmod 755 log.cron
     logInfo "Success"
