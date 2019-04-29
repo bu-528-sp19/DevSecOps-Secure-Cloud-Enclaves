@@ -29,11 +29,20 @@ function install_dependencies() {
 	logInfo "Success"
 	logInfo "Installing python..."
 	sudo yum -y install python
+	logInfo "Installing centos-release-scl..."
 	sudo yum -y install centos-release-scl
+	logInfo "Installing rh-python36"
 	sudo yum -y install rh-python36
+	logInfo "Enable rh-python36..."
 	scl enable rh-python36 bash
+	#wget https://bootstrap.pypa.io/get-pip.py
+	#python3.6 get-pip.py
+	logInfo "Installing iuscommunity..."
 	sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-        sudo yum -y install python36u python36u-devel python36u-pip
+	logInfo "Installing python36u..."
+    sudo yum -y install python36u python36u-devel python36u-pip
+    logInfo "Installing PyAesCrypt..."
+	sudo pip3.6 install PyAesCrypt
 	logInfo "Success"
 	logInfo "Installing java..."
 	sudo yum -y install java
@@ -52,7 +61,6 @@ function install_dependencies() {
 	logInfo "Success"
 	logInfo "Installing crypto..."
 	sudo yum -y install python-crypto
-        sudo pip3.6 install PyAesCrypt
 	logInfo "Success"
 	logInfo "Installing gcc"
 	sudo yum -y install gcc
