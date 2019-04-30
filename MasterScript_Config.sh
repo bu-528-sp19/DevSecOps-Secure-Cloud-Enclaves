@@ -74,7 +74,7 @@ function cron_config() {
 
     logInfo "Creating: /root/crontab.txt to launch /code/write_logs.py 30 mins past every hour..."
     { 
-        echo -e '30 * * * * python /code/write_logs.py'
+        echo -e '30 * * * * /bin/python /code/write_logs.py'
     } > /root/cron.txt
 
 
