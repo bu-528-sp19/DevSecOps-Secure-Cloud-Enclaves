@@ -8,7 +8,7 @@ if [ -f /etc/profile ] ; then
     . /etc/profile
 fi
 # Establish a log file and log tag
-logTag="logging_config"
+logTag="install"
 logDir="/var/log/cons3rt"
 logFile="${logDir}/${logTag}-$(date "+%Y%m%d-%H%M%S").log"
 ######################### GLOBAL VARIABLES #########################
