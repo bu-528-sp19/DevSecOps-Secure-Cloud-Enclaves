@@ -79,7 +79,7 @@ def download_from_bucket(key, path, bucket_name):
     try:
         bucket = conn.get_bucket(bucket_name)
         k = bucket.get_key(key)
-	encFileSz=stat('encTmp.aes').st_size
+        encFileSz=stat('encTmp.aes').st_size
         k.get_contents_to_filename(path)
         with open(path, 'rb') as infile:
             with open(path, 'wb') as outfile:
