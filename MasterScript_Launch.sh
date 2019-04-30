@@ -48,11 +48,11 @@ function start_fail2ban() {
 ############################## MAIN #########################################################
 function main(){
 	start_filebeat
-	if [ $? -ne 0 ]; then logErr "There was a problem in start_filebeat"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in start_filebeat"; return 1; fi
 	start_logstash
-	if [ $? -ne 0 ]; then logErr "There was a problem in start_logstash"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in start_logstash"; return 2; fi
 	start_fail2ban
-	if [ $? -ne 0 ]; then logErr "There was a problem in start_fail2ban"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in start_fail2ban"; return 3; fi
 	return 0
 }
 ################################ COMMANDS ###################################################

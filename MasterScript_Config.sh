@@ -101,15 +101,15 @@ function openstack_config() {
 ############################## MAIN #########################################################
 function main(){
     filebeat_config
-    if [ $? -ne 0 ]; then logErr "There was a problem with filebeat_config"; return $?; fi
+    if [ $? -ne 0 ]; then logErr "There was a problem with filebeat_config"; return 1; fi
     logstash_config
-    if [ $? -ne 0 ]; then logErr "There was a problem with logstash_config"; return $?; fi
+    if [ $? -ne 0 ]; then logErr "There was a problem with logstash_config"; return 2; fi
     fail2ban_config
-    if [ $? -ne 0 ]; then logErr "There was a problem with fail2ban_config"; return $?; fi
+    if [ $? -ne 0 ]; then logErr "There was a problem with fail2ban_config"; return 3; fi
     cron_config
-    if [ $? -ne 0 ]; then logErr "There was a problem with cron_config"; return $?; fi
+    if [ $? -ne 0 ]; then logErr "There was a problem with cron_config"; return 4; fi
     openstack_config
-    if [ $? -ne 0 ]; then logErr "There was a problem with openstack_config"; return $?; fi
+    if [ $? -ne 0 ]; then logErr "There was a problem with openstack_config"; return 5; fi
     return 0
 }
 main

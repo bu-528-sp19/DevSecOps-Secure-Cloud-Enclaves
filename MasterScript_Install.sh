@@ -208,13 +208,13 @@ function set_up_bucket() {
 ############################## MAIN #########################################################
 function main(){
 	install_dependencies
-	if [ $? -ne 0 ]; then logErr "There was a problem in install_dependecies"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in install_dependecies"; return 1; fi
 	get_scripts
-	if [ $? -ne 0 ]; then logErr "There was a problem in get_scripts"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in get_scripts"; return 2; fi
 	gen_keys
-	if [ $? -ne 0 ]; then logErr "There was a problem in gen_keys"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in gen_keys"; return 3; fi
 	set_up_bucket
-	if [ $? -ne 0 ]; then logErr "There was a problem in set_up_bucket"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in set_up_bucket"; return 4; fi
 	return 0
 }
 ################################ COMMANDS ###################################################
