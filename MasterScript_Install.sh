@@ -33,8 +33,8 @@ function install_dependencies() {
 	sudo yum -y install centos-release-scl
 	logInfo "Installing rh-python36"
 	sudo yum -y install rh-python36
-	logInfo "Enable rh-python36..."
-	scl enable rh-python36 bash
+	#logInfo "Enable rh-python36..."
+	#scl enable rh-python36 bash
 	#wget https://bootstrap.pypa.io/get-pip.py
 	#python3.6 get-pip.py
 	logInfo "Installing iuscommunity..."
