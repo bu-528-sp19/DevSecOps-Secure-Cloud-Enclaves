@@ -49,10 +49,10 @@ function fail2ban_config() {
 function cron_config() {
     logInfo "Configuring log cron job..."
     { 
-        echo -e '@hourly    0    cron.hourly             python /code/write_logs.py'
+        echo -e '@hourly python /code/write_logs.py'
     } > cron.txt
 
-    cat cron.txt >> /etc/anacrontab
+    cat cron.txt >> /etc/crontab
     rm -f cron.txt
 
 }
