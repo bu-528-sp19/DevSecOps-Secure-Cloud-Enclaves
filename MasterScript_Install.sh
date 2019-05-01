@@ -146,6 +146,12 @@ function get_scripts() {
 	chmod 755 token_parser.py
 	chmod 755 Create_Log_Bucket.py
 
+	{
+		echo -e "source /etc/profile.d/object_keys.sh"
+		echo -e "source /root/.bash_profile"
+		echo -e "/bin/python3.6 /code/write_logs.py"
+	} > cron.sh
+
 	cd /media
 	{
 		echo -e "echo \"Starting Obejct Storage API\""
