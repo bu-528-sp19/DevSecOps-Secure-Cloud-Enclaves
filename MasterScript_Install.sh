@@ -149,7 +149,7 @@ function get_scripts() {
 	cd /media
 	{
 		echo -e "echo \"Starting Obejct Storage API\""
-		echo -e "/opt/rh/rh-python36/root/usr/bin/python3.6 /code/ObjectStorageAPI.py"
+		echo -e "python3.6 /code/ObjectStorageAPI.py"
 	} > StartAPI.sh
 	if [ $? -ne 0 ]; then logErr "There was a problem creating the API script"; return 6; fi
 	mkdir /var/log/object_store
