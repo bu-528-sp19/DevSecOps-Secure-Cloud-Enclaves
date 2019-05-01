@@ -113,14 +113,13 @@ conn = boto.s3.connection.S3Connection(
 #listOfURLs=re.findall("(?P<url>https?://[^\s]+)", secrets)
 #recent=listOfURLs[-1]
 recent="https://kaizen.massopen.cloud:13311/v1/secrets/386e3d58-40cc-4820-afd8-44dc46d35bdd"
-print(recent)
+
 #GET_COMMAND='openstack --os-identity-api-version 3 --os-username '+ os.environ.get('OS_USERNAME')+ ' --os-password '+os.environ.get('OS_PASSWORD')+' secret get '
 GET_COMMAND='openstack --os-identity-api-version 3 --os-username '+os.environ.get('OS_USERNAME')+ ' --os-password '+os.environ.get('OS_PASSWORD')+' secret get '
 
 stri=os.popen(GET_COMMAND + recent + " --payload").read()#.encode()
 stri=stri.split("|")
-print("Stri")
-print(stri)
+
 indxOfSecret = stri.index(" Payload ") + 1
 password=stri[indxOfSecret]
 password=password[1:-1]

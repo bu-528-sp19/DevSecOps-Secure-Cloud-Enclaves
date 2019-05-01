@@ -26,7 +26,7 @@ function install_dependencies() {
 	if [ $? -ne 0 ]; then logErr "There was a problem updating yum"; return 1; fi
 	logInfo "Success"
 	logInfo "Installing epel..."
-#	sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+	sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 	if [ $? -ne 0 ]; then logErr "There was a problem installing epel"; return 2; fi
 	logInfo "Success"
 	logInfo "Installing python..."
@@ -38,13 +38,9 @@ function install_dependencies() {
 	logInfo "Installing rh-python36"
 	sudo yum -y install rh-python36
 	if [ $? -ne 0 ]; then logErr "There was a problem starting installing rh-python36"; return 5; fi
-	#logInfo "Enable rh-python36..."
-	#scl enable rh-python36 bash
-	#wget https://bootstrap.pypa.io/get-pip.py
-	#python3.6 get-pip.py
 	logInfo "Success"
 	logInfo "Installing iuscommunity..."
-#	sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+	sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
 	if [ $? -ne 0 ]; then logErr "There was a problem installing ius-release"; return 6; fi
 	logInfo "Installing python36u..."
     sudo yum -y install python36u python36u-devel python36u-pip
@@ -150,10 +146,16 @@ function get_scripts() {
 	chmod 755 token_parser.py
 	chmod 755 Create_Log_Bucket.py
 
+	{
+		echo -e "source /etc/profile.d/object_keys.sh"
+		echo -e "source /root/.bash_profile"
+		echo -e "/bin/python3.6 /code/write_logs.py"
+	} > cron.sh
+
 	cd /media
 	{
 		echo -e "echo \"Starting Obejct Storage API\""
-		echo -e "/opt/rh/rh-python36/root/usr/bin/python3.6 /code/ObjectStorageAPI.py"
+		echo -e "python3.6 /code/ObjectStorageAPI.py"
 	} > StartAPI.sh
 	if [ $? -ne 0 ]; then logErr "There was a problem creating the API script"; return 6; fi
 	mkdir /var/log/object_store
@@ -210,13 +212,13 @@ function set_up_bucket() {
 ############################## MAIN #########################################################
 function main(){
 	install_dependencies
-	if [ $? -ne 0 ]; then logErr "There was a problem in install_dependecies"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in install_dependecies"; return 1; fi
 	get_scripts
-	if [ $? -ne 0 ]; then logErr "There was a problem in get_scripts"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in get_scripts"; return 2; fi
 	gen_keys
-	if [ $? -ne 0 ]; then logErr "There was a problem in gen_keys"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in gen_keys"; return 3; fi
 	set_up_bucket
-	if [ $? -ne 0 ]; then logErr "There was a problem in set_up_bucket"; return $?; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in set_up_bucket"; return 4; fi
 	return 0
 }
 ################################ COMMANDS ###################################################
