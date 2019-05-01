@@ -26,7 +26,7 @@ function install_dependencies() {
 	if [ $? -ne 0 ]; then logErr "There was a problem updating yum"; return 1; fi
 	logInfo "Success"
 	logInfo "Installing epel..."
-	sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+#	sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 	if [ $? -ne 0 ]; then logErr "There was a problem installing epel"; return 2; fi
 	logInfo "Success"
 	logInfo "Installing python..."
@@ -44,7 +44,7 @@ function install_dependencies() {
 	#python3.6 get-pip.py
 	logInfo "Success"
 	logInfo "Installing iuscommunity..."
-	sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+#	sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
 	if [ $? -ne 0 ]; then logErr "There was a problem installing ius-release"; return 6; fi
 	logInfo "Installing python36u..."
     sudo yum -y install python36u python36u-devel python36u-pip
@@ -98,10 +98,12 @@ function install_dependencies() {
 	logInfo "Success"
 	logInfo "Installing boto..."
 	pip install boto
+	pip3.6 install boto
 	if [ $? -ne 0 ]; then logErr "There was a problem installing boto"; return 17; fi
 	logInfo "Success"
 	logInfo "Installing boto3..."
 	pip install boto3
+	pip3.6 install boto3
 	if [ $? -ne 0 ]; then logErr "There was a problem installing boto3"; return 18; fi
 	logInfo "Success"
 	logInfo "Installing filebeat..."
@@ -208,13 +210,13 @@ function set_up_bucket() {
 ############################## MAIN #########################################################
 function main(){
 	install_dependencies
-	if [ $? -ne 0 ]; then logErr "There was a problem in install_dependecies"; return 1; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in install_dependecies"; return $?; fi
 	get_scripts
-	if [ $? -ne 0 ]; then logErr "There was a problem in get_scripts"; return 2; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in get_scripts"; return $?; fi
 	gen_keys
-	if [ $? -ne 0 ]; then logErr "There was a problem in gen_keys"; return 3; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in gen_keys"; return $?; fi
 	set_up_bucket
-	if [ $? -ne 0 ]; then logErr "There was a problem in set_up_bucket"; return 4; fi
+	if [ $? -ne 0 ]; then logErr "There was a problem in set_up_bucket"; return $?; fi
 	return 0
 }
 ################################ COMMANDS ###################################################
