@@ -5,6 +5,7 @@ import logging
 import datetime
 import os
 import re
+import stat
 #from Crypto.Cipher import AES
 import struct
 import pyAesCrypt
@@ -79,13 +80,16 @@ def download_from_bucket(key, path, bucket_name):
     try:
         bucket = conn.get_bucket(bucket_name)
         k = bucket.get_key(key)
-        encFileSz=stat('encTmp.aes').st_size
+        encFileSz=os.stat('encTmp.aes').st_size
+        pathDec = path+'.dec'
         k.get_contents_to_filename(path)
         with open(path, 'rb') as infile:
-            with open(path, 'wb') as outfile:
+            with open(pathDec, 'wb') as outfile:
                 pyAesCrypt.decryptStream(infile,outfile,password,buffSz,encFileSz)    
-
+        replaceCommand='mv ' + pathDec + ' ' + path 
+        os.system(replaceCommand)
     except:
+        print("hi")
         logging.error('download_from_bucket() - file could not be downloaded from bucket')
     
 def delete_from_bucket(key, bucket_name):
