@@ -152,11 +152,16 @@ function get_scripts() {
 		echo -e "/bin/python3.6 /code/write_logs.py"
 	} > cron.sh
 
+	chmod 755 cron.sh
+
 	cd /media
 	{
 		echo -e "echo \"Starting Obejct Storage API\""
 		echo -e "python3.6 /code/ObjectStorageAPI.py"
 	} > StartAPI.sh
+
+	chmod 755 StartAPI.sh
+
 	if [ $? -ne 0 ]; then logErr "There was a problem creating the API script"; return 6; fi
 	mkdir /var/log/object_store
 	touch /var/log/object_store/object_store.log
