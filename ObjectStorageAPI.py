@@ -89,7 +89,6 @@ def download_from_bucket(key, path, bucket_name):
         replaceCommand='mv ' + pathDec + ' ' + path 
         os.system(replaceCommand)
     except:
-        print("hi")
         logging.error('download_from_bucket() - file could not be downloaded from bucket')
     
 def delete_from_bucket(key, bucket_name):

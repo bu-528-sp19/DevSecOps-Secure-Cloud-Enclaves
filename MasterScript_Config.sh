@@ -94,6 +94,7 @@ function openstack_config() {
     if [ $? -ne 0 ]; then logErr "There was a problem creating the /etc/openstack directory"; return 1; fi
     cd openstack
     mv /media/clouds.yaml clouds.yaml
+    chmod 755 clouds.yaml
     if [ $? -ne 0 ]; then logErr "There was a problem adding clouds.yaml"; return 2; fi
     logInfo "Success"
     return 0
