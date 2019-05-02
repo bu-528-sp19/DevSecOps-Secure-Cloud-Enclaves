@@ -140,11 +140,14 @@ function get_scripts() {
 	if [ $? -ne 0 ]; then logErr "There was a problem downloading write_logs.py"; return 4; fi
 	curl -o /code/ObjectStorageAPI.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/ObjectStorageAPI.py
 	if [ $? -ne 0 ]; then logErr "There was a problem installing ObjectStorageAPI.py"; return 5; fi
+	curl -o /code/download_logs.py https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/download_logs.py
+	if [ $? -ne 0 ]; then logErr "There was a problem installing download_logs.py"; return 6; fi
 	cd code
-	chmod 755 write_logs.py
+	chmod 700 write_logs.py
 	chmod 755 ObjectStorageAPI.py
 	chmod 755 token_parser.py
-	chmod 755 Create_Log_Bucket.py
+	chmod 700 Create_Log_Bucket.py
+	chmod 700 download_logs.py
 
 	{
 		echo -e "source /etc/profile.d/object_keys.sh"
@@ -152,7 +155,7 @@ function get_scripts() {
 		echo -e "/bin/python3.6 /code/write_logs.py"
 	} > cron.sh
 
-	chmod 755 cron.sh
+	chmod 700 cron.sh
 
 	cd /media
 	{
