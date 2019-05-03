@@ -206,7 +206,7 @@ function gen_keys() {
 	}' https://kaizen.massopen.cloud:13311/v1/orders
 	if [ $? -ne 0 ]; then logErr "There was a problem getting the log_storage key"; return 4; fi
 	
-	chmod 700 inf
+	chmod 700 /inf
 	logInfo "Success"
 	return 0
 }
