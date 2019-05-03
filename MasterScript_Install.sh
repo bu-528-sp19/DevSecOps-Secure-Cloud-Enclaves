@@ -127,7 +127,7 @@ function install_dependencies() {
 	return 0
 }
 function get_scripts() {
-	echo "Getting scripts..."
+	logInfo "Getting scripts..."
 	cd /
 	mkdir code
 	if [ $? -ne 0 ]; then logErr "There was a problem making the code folder"; return 1; fi
@@ -172,11 +172,11 @@ function get_scripts() {
 	return 0
 }
 function gen_keys() {
-	echo 'Generating keys...'
+	logInfo 'Generating keys...'
 	# Creating folder to store credentials with only root access
 	cd /
 	mkdir inf
-	chmod 700 inf
+	
 	# Set authentication URL to Keystone endpoint
 	declare -x OS_AUTH_URL=https://kaizen.massopen.cloud:13000
 	# Create scoped token for keystone authentication (required for curl requests to Barbican)
@@ -205,7 +205,8 @@ function gen_keys() {
 	"bit_length": 256, "mode": "cbc", "payload_content_type": "application/octet-stream"}
 	}' https://kaizen.massopen.cloud:13311/v1/orders
 	if [ $? -ne 0 ]; then logErr "There was a problem getting the log_storage key"; return 4; fi
-
+	
+	chmod 700 inf
 	logInfo "Success"
 	return 0
 }
