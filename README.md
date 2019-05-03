@@ -1,4 +1,8 @@
 # DevSecOps-Secure-Cloud-Enclaves
+
+Check out our demo video to know what our project is about and what it can do:
+https://www.youtube.com/watch?v=Sycil6SxeBM&feature=youtu.be
+
 ## Vision and Goals
 
 As the workplace evolves, so must security for such an environment. Today we live in the cloud-native and container security era, with IT professionals having to understand Docker, Kubernetes, serverless computing, and much more. This age of increasingly sophisticated systems has resulted in more complex cyber-attacks, and the legacy firewalls can’t keep up anymore. Resources that can be entirely firewalled off from the world are becoming rarer everyday.  Even on-prem infrastructures for internal applications has to connect to an outside resource at some point (backups, S3 storage, etc).
@@ -298,9 +302,6 @@ Setting up Fail2ban involves the following steps:
     * The configuration file is located at `/etc/fail2ban/jail.d/ssh.local` 
 4. Run Fail2ban service (which is covered in the `MasterScript_Launch.sh` file)
 
-## Video
-Following is the link to our demo video, wherein we have provided an overview of our project and it's functionalities, and a short demo of it's working:
-'https://www.youtube.com/watch?v=Sycil6SxeBM&feature=youtu.be'
 
 ## Our mentors
 * Peter Walsh ([peter.walsh@jackpinetech.com](peter.walsh@jackpinetech.com))
