@@ -208,7 +208,7 @@ function gen_keys() {
 	openstack --os-identity-api-version 3 --os-username=bu528-secure-cloud-enclaves --os-password=6BDD843C-5B49-46AD-93B3-C2AAEC930AF9 secret store --name writelog --payload 'write a lot cheat a little'
 
 
-openstack --os-identity-api-version 3 --os-username=bu528-secure-cloud-enclaves --os-password=6BDD843C-5B49-46AD-93B3-C2AAEC930AF9 secret store --name objstore --payload 'store a lot cheat a little'
+	openstack --os-identity-api-version 3 --os-username=bu528-secure-cloud-enclaves --os-password=6BDD843C-5B49-46AD-93B3-C2AAEC930AF9 secret store --name objstore --payload 'store a lot cheat a little'
 	chmod 700 /inf
 	logInfo "Success"
 	return 0
