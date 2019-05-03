@@ -298,6 +298,10 @@ Setting up Fail2ban involves the following steps:
     * The configuration file is located at `/etc/fail2ban/jail.d/ssh.local` 
 4. Run Fail2ban service (which is covered in the `MasterScript_Launch.sh` file)
 
+## Video
+Following is the link to our demo video, wherein we have provided an overview of our project and it's functionalities, and a short demo of it's working:
+'https://www.youtube.com/watch?v=Sycil6SxeBM&feature=youtu.be'
+
 ## Our mentors
 * Peter Walsh ([peter.walsh@jackpinetech.com](peter.walsh@jackpinetech.com))
 * Joe Yennaco ([joe.yennaco@jackpinetech.com](joe.yennaco@jackpinetech.com))
