@@ -16,7 +16,7 @@ with open('/inf/log_key.json','r') as file:
 import re
 q=re.findall("(?P<url>https?://[^\s]+)",data)
  
-recent=q[0][:-2]
+recent=q[0]
 
 #GET_COMMAND='openstack --os-identity-api-version 3 --os-username '+ os.environ.get('OS_USERNAME')+ ' --os-password '+os.environ.get('OS_PASSWORD')+' secret get '
 GET_COMMAND='openstack --os-identity-api-version 3 --os-username '+os.environ.get('OS_USERNAME')+ ' --os-password '+os.environ.get('OS_PASSWORD')+' secret get '
