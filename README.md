@@ -134,8 +134,171 @@ https://tree.taiga.io/project/bowenislandsong-devsecops-secure-cloud-enclaves/ta
   * Finished product
   * Stretch goals (time permitting)
     * Java workflows
-  
-  ## Our mentors
+
+## Documentation
+### Setting up our system
+
+Four scripts are used in the setup of our secure VMs. They are designed for a CentOS 7 operating system, but should be transferable to any Linux OS. In Github, they are designated by `MasterScript_XXX.sh`. The steps for setup are easy in CONS3RT as all you have to do is upload the scripts as software assets, and add them to your system using the CONS3RT UI. Standing them up on your own is a little more challenging. The steps are as follows:
+
+1. Download `MasterScript_EnvironmentVars_TEMPLATE.sh`. Save it as `MasterScript_EnvironmentVars.sh` on your computer.
+2. In `MasterScript_EnvironmentVars.sh`, some of the data in the template needs to be replaced with your own keystone credentials and passwords. Any field that says /*PROJECT*/, /*USERNAME*/, or /*PASSWORD*/ needs to be replaced with the Openstack project name, keystone username, and keystone password, respectively. These are located on lines `31`, `32`, `70`, `71`, `72`, `80`, `81`, and `82`.
+3. Finally in `MasterScript_EnvironmentVars.sh`, on lines 48 and 49, /*ACCESS KEY*/ and /*SECRET KEY*/ must be replaced with the projects EC2 access key and secret key. These can be obtained on the MOC Dashboard via the API Access tab.
+4. Startup a brand new CentOS 7 VM
+5. Change the password to the root user (`sudo passwd root`)
+6. Log into the root user (`su -l root`)
+1. This step is optional, but for organization, it is helpful to create a folder /scripts to hold all of the scripts you must run (`mkdir /scripts`)
+1. Create a file `setup.sh` (`vi setup.sh`)
+1. While in VI, copy the `MasterScript_EnvironmentVars.sh` text into this file. Make sure that the first line is correctly a comment, sometimes copying goes wrong.
+1. Exit VI
+1. Download the remaining scripts from our Github repo
+    1. The command is : ```curl -O https://raw.githubusercontent.com/bu-528-sp19/DevSecOps-Secure-Cloud-Enclaves/master/XXX```
+    1. The XXX at the end should be the three files
+        1. `MasterScript_Install.sh`
+        1. `MasterScript_Config.sh`
+        1. `MasterScript_Launch.sh`
+1. Run the command: `sed -i 's/\r$//' setup.sh`
+1. This will resolve issues when converting the script to Linux
+1. Run the `setup.sh` script (`bash setup.sh`)
+1. Reboot the VM
+1. Log back in, and then into the root user. Navigate back to the directory with the scripts in it.
+1. Repeat steps 12-15 with the three other scripts, making sure to change the name where appropriate in the steps. __DO NOT REBOOT AFTER RUNNING `MasterScript_Launch.sh`__. The general order of installation is:                    
+    1. `MasterScript_Install.sh`
+    1. Reboot
+    1. `MasterScript_Config.sh`
+    1. Reboot
+    1. `MasterScript_Launch.sh`
+1. Now everything is running! What can you do…
+    1. The command (```bash /media/StartAPI.sh```) will open up our interactive Object storage API to store your data securely within CEPH Object storage. Details on interacting with the API itself will be listed below.
+    1. To interact with openstack on the root user
+       * If you left the ```clouds.yaml``` file intact and only changed the passwords not the overall name of the clouds, moc_old and moc_new
+        * The command (```openstack --os-cloud moc_old --os-auth-url https://kaizenold.massopen.cloud:5000```) will open up a terminal interface for the Openstack CLI to interact with your project on Kaizen Old
+        * The command (```openstack --os-cloud moc_new --os-identity-api-version 3```) will open up a terminal interface for the Openstack CLI to interact with your project on New Kaizen
+    1. Everything else is implemented in the background and will be detailed below.
+
+### The Scripts
+All of the scripts have logging functions built-in and will log error and info messages to a directory ```/var/log/cons3rt```. Each of the scripts is split into functions which are detailed below.
+
+#### MasterScript_EnvironmentVars.sh
+* `add_environment_vars()`:
+    * Adds environment variables to be sourced upon login of the various users
+        *    Without actual MOC admin privileges, we are assuming the root user will mimic this role; thus, the root user has access to the project name, and keystone credentials to access the MOC interface.
+        *    A general user on the VM will not have such access, except through the CONS3RT UI. However, they will be able to store data; thus, they have access to the object storage access key and secret key.
+* `create_clouds()`:
+    *    Adds the openstack CLI configuration file, clouds.yaml
+    *    Two clouds are created in the template, moc_old and moc_new as, we used both a Kaizen old and new account at certain points in the project. If you only need one account access you can remove one of the sections. Both clouds are configured using “operation_log” to log all events that are done in the CLI. This is to mimic configurations that could be made if we had access to the MOC backend.
+#### MasterScript_Install.sh
+*    `install_dependencies()`:
+        *    installs all dependencies needed to run the various services we have stood up on the VM as well as the services themselves
+*    `get_scripts()`:
+        *    Downloads all relevant scripts from our Github repo and restrict permissions
+        * Create simple files that are only a few lines of code manually
+        * Create logging directory for Object Storage API
+        * These scripts are securely stored in the `/code` directory which can only be modified by the root user
+* ```gen_keys()```:
+    * Generate a keystone token
+    * Uses the keystone token and Barbican to generate keys for the object storage and log storage buckets
+    * The keys as well as the initial keystone token are stored in the `/inf` directory which is also limited to root modification
+* ```set_up_bucket()```:
+    * Creates dedicated bucket to store logs using the `/code/Create_Log_Bucket.py` script
+    * This bucket is named `log_bucket`
+#### MasterScript_Config.sh
+* ``filebeat_config()``:
+    * Downloads filebeat configuration file from Github to correct directory
+* ``logstash_config()``:
+    * Downloads logstash configuration file from Github to correct directory
+* ```fail2ban_config()```:
+    * Configures fail2ban by creating necessary files
+* ```cron_config()```:
+    * Creates a crontab to send logs to the secure buckets every hour
+* ```openstack_config()```:
+    * Moves the clouds.yaml file to the `/etc/openstack directory` and sets permissions
+#### MasterScript_Launch.sh
+* Uses functions to start Filebeat, logstash, and fail2ban on the VM
+    * ```start_filebeat()```
+    * ```start_logstash()```
+    * ```start_fail2ban()```
+
+
+### The Object Storage API and Encryption
+
+#### Object Storage Features
+
+We have implemented the following security features for Ceph S3 buckets:
+* Allowing only SSL requests
+* Versioning objects in the buckets
+* Generating logs for all bucket events
+* Encrypting the objects stored in buckets
+
+To ensure that users do not need to enable any of these features manually we have built an object storage API with an interactive CLI in Python.
+#### How to Use the API
+1. To start the API, run the command `bash /media/StartAPI.sh`. The API code itself is in `/code/ObjectStorageAPI.py`
+2. The API will prompt the user to continue by entering (Y or N) at the beginning each transaction
+3. The API will print all the options available to a user. The numbered list of available features are:
+    1. List buckets
+    2. Create bucket 
+    3. Delete bucket
+    4. List bucket versions
+    5. Upload to bucket
+    6. Download from bucket
+    7. Delete from bucket
+4. The general inputs that could be asked upon entering one of the given numbers are:
+    * Key --> Name of the file that will be stored/is stored in the bucket
+    * Path --> Path to the file that will be uploaded/where to be downloaded on the VM
+    * Bucket --> Name of bucket to be operated on
+        * All available buckets can be seen using the `List Buckets ` feature
+        * Users other than the root cannot access the log bucket
+            * The root can use `/code/download_logs.py` to download a given log file by entering the date of the file they want to download or all log files
+ 
+
+#### Encryption
+* `pyAesCrypt`:
+    * Used to encrypt files (chunk by chunk)
+* `Barbican`:
+    * Used as a key management service (OpenStack's implementation)
+    * Stores encryption keys remotely
+* Encryption takes keys off of Barbican and uses the encryption method to encrypt files before being sent to the bucket
+* Encrypted file is then pushed to the bucket encrypted
+* By default, SSL/TLS is enabled 
+
+### Logging Architecture
+We have stood up the logging architecture as below:
+
+The logging architecture follows this process:
+1. Hosted services and OS specific events write their logs to /var/log on a linux machine
+2. Filebeat collects the logs that are specified in its config file
+    1. This configuration file is located at `/etc/filebeat/filebeat.yml`
+    2. The logs we are collecting are defined in the input section of `filebeat.yml`
+        * Hosted Services
+        * Messages --> general VM activity
+        * Secure --> logins, authentication
+        * Bucket events
+        * Openstack events
+        * Startup Logs
+    3. This is done using regular expressions and static casts of unchanging log directories
+3. Filbeat forwards the logs to Logstash
+    1. This is defined in the output section of `filebeat.yml`
+5. Logstash recieves the logs from filebeat as an input
+    1. This is defined in the inputs section of `/etc/logstash/conf.d/logstash.conf`
+6. Logstash filters the logs removing any unecessary default tags
+    1. This filter is defined in the filter section of `logstash.conf`
+7. Logstash outputs the filtered logs to `/store_log` a secure folder on the VM
+    1. This output is defined in the output section of `logstash.conf`
+8. A cron job runs every hour, writing the logs to our secure bucket named `log_bucket` that was created on startup of the VM
+    1. This cron job runs a script `/code/cron.sh` which sources neccessary environment variables for cron and then calls `/code/write_logs.py` to write the logs
+
+
+### Fail2ban
+Fail2ban is an Intrusion detection/protection system (IDS/IPS). It scans for brute force login attempts in real-time and bans the attackers. Blocks the IP addresses which show signs of brute force attacks or dictionary attacks. This program works in the background and continuously scans the log files for unusual login patterns and security breach attempts. 
+We have set up Fail2ban through our automation scripts- `MasterScript_Install.sh`, `MasterScript_Config.sh` and `MasterScript_Launch.sh`.
+
+Setting up Fail2ban involves the following steps:
+1. Installing dependencies such as EPEL (which is covered in the `MasterScript_Install.sh` file)
+2. Installing fail2ban (which is covered in the `MasterScript_Install.sh` file)
+3. Configure settings for Fail2Ban (which is covered in the `MasterScript_Config.sh` file)
+    * The configuration file is located at `/etc/fail2ban/jail.d/ssh.local` 
+4. Run Fail2ban service (which is covered in the `MasterScript_Launch.sh` file)
+
+## Our mentors
 * Peter Walsh ([peter.walsh@jackpinetech.com](peter.walsh@jackpinetech.com))
 * Joe Yennaco ([joe.yennaco@jackpinetech.com](joe.yennaco@jackpinetech.com))
 
