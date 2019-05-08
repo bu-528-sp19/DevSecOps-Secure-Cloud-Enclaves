@@ -198,7 +198,7 @@ function gen_keys() {
 	#"type":"key", "meta": { "name": "data_key", "algorithm": "aes",
 	#"bit_length": 256, "mode": "cbc", "payload_content_type": "application/octet-stream"}
 	#}' https://kaizen.massopen.cloud:13311/v1/orders
-	openstack --os-identity-api-version 3 --os-username=$OS_USERNAME --os-password=$OS_PASSWORD --name writelog --payload 'write a lot cheat a little' | grep https > store_key.json
+	openstack --os-identity-api-version 3 --os-username=$OS_USERNAME --os-password=$OS_PASSWORD secret store --name writelog --payload 'write a lot cheat a little' | grep https > store_key.json
 	if [ $? -ne 0 ]; then logErr "There was a problem getting the object_storage key"; return 3; fi
 	# Generate key for log storage bucket
 	#curl -o log_key.json -X POST -H "X-Auth-Token: $TOKEN" -H "content-type:application/json" -d '{
@@ -206,7 +206,7 @@ function gen_keys() {
 	#"bit_length": 256, "mode": "cbc", "payload_content_type": "application/octet-stream"}
 	#}' https://kaizen.massopen.cloud:13311/v1/orders
 
-	openstack --os-identity-api-version 3 --os-username=$OS_USERNAME --os-password=$OS_PASSWORD --name objstore --payload 'store a lot cheat a little' | grep https > log_key.json
+	openstack --os-identity-api-version 3 --os-username=$OS_USERNAME --os-password=$OS_PASSWORD secret store --name objstore --payload 'store a lot cheat a little' | grep https > log_key.json
 	if [ $? -ne 0 ]; then logErr "There was a problem getting the log_storage key"; return 4; fi
 	
 	chmod 700 /inf
