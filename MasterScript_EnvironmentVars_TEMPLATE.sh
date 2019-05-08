@@ -103,5 +103,5 @@ chmod 700 ${logDir}
 touch ${logFile}
 chmod 644 ${logFile}
 main
-logInfo "Exiting MasterScript_Install with log error : $?"
+logInfo "Exiting MasterScript_EnvironmentVars with log error : $?"
 cat ${logFile}
