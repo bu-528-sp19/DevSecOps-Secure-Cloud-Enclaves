@@ -177,8 +177,6 @@ function gen_keys() {
 	cd /
 	mkdir inf
 	
-	# Set authentication URL to Keystone endpoint
-	declare -x OS_AUTH_URL=https://kaizen.massopen.cloud:13000
 	# Create scoped token for keystone authentication (required for curl requests to Barbican)
 	openstack --os-identity-api-version 3 --os-username=$OS_USERNAME --os-user-domain-name=default --os-password=$OS_PASSWORD --os-project-name=$OS_USERNAME --os-project-domain-name=default token issue > /inf/auth_token.txt
 	if [ $? -ne 0 ]; then logErr "There was a problem getting the token"; return 1; fi
