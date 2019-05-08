@@ -114,5 +114,5 @@ function main(){
     return 0
 }
 main
-logInfo "Exiting MasterScript_Install with log error : $?"
+logInfo "Exiting MasterScript_Config with log error : $?"
 cat ${logFile}

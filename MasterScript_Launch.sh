@@ -57,5 +57,5 @@ function main(){
 }
 ################################ COMMANDS ###################################################
 main
-logInfo "Exiting MasterScript_Install with log error : $?"
+logInfo "Exiting MasterScript_Launch with log error : $?"
 cat ${logFile}
